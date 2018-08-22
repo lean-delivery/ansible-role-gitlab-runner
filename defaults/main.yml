@@ -1,0 +1,45 @@
+---
+# defaults file for ansible-role-gitlab-runner
+
+gitlab_version: "9.5.0"
+gitlab_runner_package: "{{ gitlab_version is \
+version_compare('10.0', '>=', strict=True) | ternary('gitlab-runner','gitlab-ci-multi-runner') }}"
+gitlab_host: git.epam.com
+gitlab_url: "https://{{ gitlab_host }}/ci"
+gitlab_ci_token: ""
+gitlab_runner_description: >-
+    {{ ansible_fqdn }} {{ ansible_distribution }} {{ ansible_distribution_major_version }}
+gitlab_runner_tags: "delegated"
+gitlab_runner_untagged_builds_run: "False"
+gitlab_runner_lock_to_project: "False"
+gitlab_runner_executor: "shell"
+gitlab_runner_limit: 1
+gitlab_runner_concurrent: "{{ ansible_processor_vcpus }}"
+gitlab_runner_request_concurrency: 1
+
+# https://gitlab.com/gitlab-org/gitlab-runner/issues/259
+gitlab_runner_env_vars:
+  - 'ENV=value'
+  - 'LC_ALL=en_US.UTF-8'
+
+gitlab_runner_config:
+  params:
+    REGISTRATION_TOKEN: "{{ gitlab_ci_token }}"
+    RUNNER_NAME: "{{ gitlab_runner_description }}"
+    CI_SERVER_URL: "{{ gitlab_url }}"
+    RUNNER_EXECUTOR: "{{ gitlab_runner_executor }}"
+    REGISTER_RUN_UNTAGGED: "{{ gitlab_runner_untagged_builds_run }}"
+    REGISTER_LOCKED: "{{ gitlab_runner_lock_to_project }}"
+    RUNNER_TAG_LIST: "{{ gitlab_runner_tags }}"
+    RUNNER_LIMIT: "{{ gitlab_runner_limit }}"
+    RUNNER_REQUEST_CONCURRENCY: "{{ gitlab_runner_request_concurrency }}"
+    REGISTER_NON_INTERACTIVE: True
+  global:
+    concurrent: "{{ gitlab_runner_concurrent }}"
+
+gitlab_runner_skip_registration: False
+
+packages_additional: []
+
+gitlab_runner_gpg: >-
+    https://packages.gitlab.com/gpg.key

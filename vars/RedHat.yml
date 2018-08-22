@@ -1,0 +1,11 @@
+---
+packages_base:
+  - yum-utils
+  - pygpgme
+  - ca-certificates
+
+gitlab_runner_install_package: "{{ gitlab_runner_package }}\
+{{ (gitlab_version != 'latest') | ternary('-' ~ gitlab_version ~ '*', '') }}"
+
+gitlab_runner_repo: "https://packages.gitlab.com/runner/\
+{{ gitlab_runner_package }}/el/{{ ansible_distribution_major_version }}/$basearch"

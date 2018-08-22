@@ -1,0 +1,17 @@
+---
+- name: Run test on centos
+  hosts: ansible_role_gitlab_runner_centos_ct
+  roles:
+    - role: ansible-role-gitlab-runner
+      vars:
+        gitlab_runner_concurrent: 1
+        gitlab_runner_skip_registration: True
+
+- name: Run test on ubuntu
+  hosts: ansible_role_gitlab_runner_ubuntu_ct
+  roles:
+    - role: ansible-role-gitlab-runner
+      vars:
+        gitlab_runner_concurrent: 4
+        gitlab_runner_skip_registration: 
+        gitlab_version: "10.5"

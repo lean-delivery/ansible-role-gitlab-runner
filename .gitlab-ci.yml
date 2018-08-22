@@ -1,0 +1,19 @@
+---
+# Run all tests
+stages:
+  - lint
+  - Deployment test
+before_script:
+  - ansible --version
+  - molecule --version
+variables:
+  GET_SOURCES_ATTEMPTS: "5"
+
+AWS ansible-role-gitlab-runner:
+  variables:
+    EPC_REGION: AWS-EUCENTRAL
+  stage: Deployment test
+  script:
+    - molecule test -s cloud-aws
+  tags:
+    - delegated

@@ -1,0 +1,23 @@
+---
+# tasks file for ansible-role-docker
+
+- name: Incule variables
+  include_vars: "{{ ansible_os_family }}.yml"
+
+- name: Prepare system
+  include_tasks: prepare-gitlab-runner.yml
+
+- name: adding selinux support
+  include_tasks: selinux-support.yml
+  when: ansible_os_family == "RedHat"
+
+- name: Configure system
+  include_tasks: "{{ platform }}"
+  with_first_found:
+    - "system/{{ ansible_os_family }}.yml"
+    - "system/not-supported.yml"
+  loop_control:
+    loop_var: platform
+
+- name: Configure gitlab-runner daemon
+  include_tasks: config-gitlab-runner.yml

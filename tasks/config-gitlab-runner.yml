@@ -1,0 +1,14 @@
+---
+- name: Set advanced configuration | global section
+  lineinfile:
+    dest: /etc/gitlab-runner/config.toml
+    regexp: '^(.*){{ item.param }} ='
+    line: '\1{{ item.param }} = {{ item.value }}'
+    state: present
+    backrefs: True
+  notify: restart gitlab-runner
+  loop:
+    - {param: "concurrent", value: "{{ global_section.concurrent }}"}
+  vars:
+    global_section: "{{ gitlab_runner_config.global }}"
+  become: True

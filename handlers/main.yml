@@ -1,0 +1,24 @@
+---
+# handlers file for ansible-role-gitlab-runner
+
+- name: restart gitlab-runner
+  service:
+    name: gitlab-runner
+    state: restarted
+    enabled: True
+  listen: kick gitlab-runner
+  become: True
+
+- name: register gitlab-runner
+  command: >-
+          gitlab-runner register
+          {% for env_var in gitlab_runner_env_vars %}
+          --env '{{ env_var }}'
+          {% endfor %}
+  register: runner_registered
+  become: True
+  listen: kick gitlab-runner
+  failed_when: runner_registered.rc != 0
+  when: (not gitlab_runner_skip_registration) and gitlab_ci_token != ''
+  environment: "{{ gitlab_runner_config.params }}"
+  no_log: True

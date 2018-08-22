@@ -1,0 +1,6 @@
+---
+- name: Install required packages
+  package:
+    name: "{{ packages_base | union(packages_additional) | unique }}"
+    state: present
+  become: True
