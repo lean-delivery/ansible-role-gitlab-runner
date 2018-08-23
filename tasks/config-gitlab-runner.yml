@@ -12,3 +12,6 @@
   vars:
     global_section: "{{ gitlab_runner_config.global }}"
   become: True
+
+- name: Force all notified handlers to run
+  meta: flush_handlers
