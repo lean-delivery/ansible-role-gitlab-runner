@@ -23,5 +23,7 @@
     name: "{{ gitlab_runner_install_package }}"
     state: present
     update_cache: True
+  register: installed_gitlab
+  until: installed_gitlab is succeeded
   notify: kick gitlab-runner
   become: True

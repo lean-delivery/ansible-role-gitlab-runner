@@ -1,30 +1,21 @@
 ---
 dependency:
   name: galaxy
+  options:
+    role-file: requirements.yml
 driver:
   name: docker
 lint:
   name: yamllint
   options:
-    config-file: molecule/yamllint.yml
+    config-file: .yamllint
 platforms:
-  - name: test-ansible-role-gitlab-runner-centos
+  - name: test-docker-centos7-ansible-role-gitlab-runner
     image: leandelivery/docker-systemd:centos7
-    privileged: False
-    security_opts:
-      - seccomp=unconfined
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
-    tmpfs:
-      - /tmp
-      - /run
-    capabilities:
-      - SYS_ADMIN
+    privileged: True
     groups:
-      - ansible_role_gitlab_runner_centos_ct
-    env:
-      TERM: xterm
-  - name: test-ansible-role-docker-debian
+      - rhel_family
+  - name: test-docker-ubuntu1804-ansible-role-gitlab-runner
     image: leandelivery/docker-systemd:ubuntu-18.04
     privileged: True
     security_opts:
@@ -37,15 +28,10 @@ platforms:
     capabilities:
       - SYS_ADMIN
     groups:
-      - ansible_role_gitlab_runner_ubuntu_ct
+      - debian_family
 provisioner:
   name: ansible
-  config_options:
-    ssh_connection:
-      control_path: "/var/ans/%%h"
-  env:
-    ANSIBLE_LIBRARY:
-      /home/gitlab-runner/.local/lib/python2.7/site-packages/epam_ansible
+  # log: True
   lint:
     name: ansible-lint
 scenario:
