@@ -1,6 +1,6 @@
 ---
 - name: Run test on centos
-  hosts: ansible_role_gitlab_runner_centos_ct
+  hosts: rhel_family
   roles:
     - role: ansible-role-gitlab-runner
       vars:
@@ -8,7 +8,7 @@
         gitlab_runner_skip_registration: True
 
 - name: Run test on ubuntu
-  hosts: ansible_role_gitlab_runner_ubuntu_ct
+  hosts: debian_family
   roles:
     - role: ansible-role-gitlab-runner
       vars:

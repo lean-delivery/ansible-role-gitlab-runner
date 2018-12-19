@@ -28,7 +28,7 @@ Requirements
 
 - required
   - `gitlab_version`  
-  Specific version of Gitlab-Runner. Default value is `9.5.0`.
+  Specific version of Gitlab-Runner. Default value is `10.5`.
   - `gitlab_ci_token`
   A Token you obtained to register the Runner. Default value is ``.
 
@@ -68,7 +68,7 @@ Example Playbook
 ### Installing gitlab-runner to centos 7:
 ```yaml
 - name: Converge
-  hosts: ansible_role_gitlab_runner_ct
+  hosts: rhel_family
   roles:
     - role: ansible-role-gitlab-runner
       vars:
@@ -79,7 +79,7 @@ Example Playbook
 ### Installing gitlab-runner to ubuntu 18.04:
 ```yaml
 - name: Converge
-  hosts: ansible_role_gitlab_runner_ct
+  hosts: debian_family
   roles:
     - role: ansible-role-gitlab-runner
       vars:

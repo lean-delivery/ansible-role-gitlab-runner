@@ -14,4 +14,3 @@
       vars:
         gitlab_runner_concurrent: 4
         gitlab_runner_skip_registration: 
-        gitlab_version: "10.5"

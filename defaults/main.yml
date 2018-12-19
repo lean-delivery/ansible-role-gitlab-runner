@@ -1,7 +1,7 @@
 ---
 # defaults file for ansible-role-gitlab-runner
 
-gitlab_version: "9.5.0"
+gitlab_version: "10.5"
 gitlab_runner_package: "{{ gitlab_version is \
 version_compare('10.0', '>=', strict=True) | ternary('gitlab-runner','gitlab-ci-multi-runner') }}"
 gitlab_host: git.epam.com

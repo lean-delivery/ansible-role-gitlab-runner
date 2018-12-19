@@ -9,9 +9,9 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
 
 
 def test_gitlab_runner_package_is_installed(host):
-    gitlab_runner_pkg = host.package("gitlab-ci-multi-runner")
+    gitlab_runner_pkg = host.package("gitlab-runner")
     assert gitlab_runner_pkg.is_installed
-    assert gitlab_runner_pkg.version.startswith("9.5.0")
+    assert gitlab_runner_pkg.version.startswith("10.5")
 
 
 def test_gitlab_runner_service_running_and_enabled(host):
