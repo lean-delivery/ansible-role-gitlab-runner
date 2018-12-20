@@ -4,7 +4,7 @@
   roles:
     - role: ansible-role-gitlab-runner
       vars:
-        gitlab_runner_concurrent: 4
+        gitlab_runner_concurrent: 1
         gitlab_runner_skip_registration: True
 
 - name: Converge | Ubuntu
@@ -13,5 +13,4 @@
     - role: ansible-role-gitlab-runner
       vars:
         gitlab_runner_concurrent: 4
-        gitlab_runner_skip_registration: True        
-        gitlab_version: "10.5"
+        gitlab_runner_skip_registration: True

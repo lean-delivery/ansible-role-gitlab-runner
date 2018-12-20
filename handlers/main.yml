@@ -19,6 +19,8 @@
   become: True
   listen: kick gitlab-runner
   failed_when: runner_registered.rc != 0
-  when: (not gitlab_runner_skip_registration) and gitlab_ci_token
+  when:
+    - not gitlab_runner_skip_registration
+    - gitlab_ci_token
   environment: "{{ gitlab_runner_config.params }}"
   no_log: True
