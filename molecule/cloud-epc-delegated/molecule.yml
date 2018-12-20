@@ -8,37 +8,38 @@ driver:
 lint:
   name: yamllint
   options:
-    config-file: molecule/yamllint.yml
+    config-file: .yamllint
 platforms:
-  - name: test-ansible-role-gitlab-runner-centos
+  - name: test-epc-centos7-ansible-role-gitlab-runner
     image: CentOS7_64-bit
     shape: small
-    region: AWS-EUCENTRAL
-    wait_timeout: 1800
+    region: EPAM-BY2
+    wait_timeout: 3600
     groups:
-      - ansible_role_gitlab_runner_centos_ct
-  - name: test-ansible-role-docker-ubuntu
+      - rhel_family
+  - name: test-epc-ubuntu1804-ansible-role-gitlab-runner
     image: Ubuntu18.04_64-bit
     shape: small
-    region: AWS-EUCENTRAL
-    wait_timeout: 1800
+    region: EPAM-BY2
+    wait_timeout: 3600
     groups:
-      - ansible_role_gitlab_runner_ubuntu_ct
+      - debian_family
 provisioner:
   name: ansible
+  log: True
   playbooks:
-    create: ../resources/playbooks/create.yml
-    destroy: ../resources/playbooks/destroy.yml
+    create: ../resources/provisioning/create.yml
+    prepare: ../resources/provisioning/prepare.yml
+    destroy: ../resources/provisioning/destroy.yml
   config_options:
     ssh_connection:
       control_path: "/var/ans/%%h"
   lint:
     name: ansible-lint
   env:
-    ANSIBLE_LIBRARY:
-      /home/gitlab-runner/.local/lib/python2.7/site-packages/epam_ansible
+    ANSIBLE_LIBRARY: ${ANSIBLE_LIBRARY}
 scenario:
-  name: cloud-aws
+  name: cloud-epc-delegated
 verifier:
   name: testinfra
   options:

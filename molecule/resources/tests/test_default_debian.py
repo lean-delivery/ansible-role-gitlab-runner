@@ -2,7 +2,7 @@ import os
 
 import testinfra.utils.ansible_runner
 
-group_name = 'ansible_role_gitlab_runner_ubuntu_ct'
+group_name = 'debian_family'
 
 testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
     os.environ['MOLECULE_INVENTORY_FILE']).get_hosts(group_name)

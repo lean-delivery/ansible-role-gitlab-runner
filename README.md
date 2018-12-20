@@ -4,13 +4,15 @@ gitlab-runner role
 [![License](https://img.shields.io/badge/license-Apache-green.svg?style=flat)](https://raw.githubusercontent.com/lean-delivery/ansible-role-gitlab-runner/master/LICENSE)
 [![Build Status](https://travis-ci.org/lean-delivery/ansible-role-gitlab-runner.svg?branch=master)](https://travis-ci.org/lean-delivery/ansible-role-gitlab-runner)
 [![Build Status](https://gitlab.com/lean-delivery/ansible-role-gitlab-runner/badges/master/build.svg)](https://gitlab.com/lean-delivery/ansible-role-gitlab-runner)
-
+[![Galaxy](https://img.shields.io/badge/galaxy-lean__delivery.docker-blue.svg)](https://galaxy.ansible.com/lean_delivery/docker)
+![Ansible](https://img.shields.io/ansible/role/d/29089.svg)
+![Ansible](https://img.shields.io/badge/dynamic/json.svg?label=min_ansible_version&url=https%3A%2F%2Fgalaxy.ansible.com%2Fapi%2Fv1%2Froles%2F29089%2F&query=$.min_ansible_version)
 
 ## Summary
 
 This Ansible role has the following features:
 
- - Install docker-ce
+ - Install gitlab-runner
 
 Requirements
 ------------
@@ -26,7 +28,7 @@ Requirements
 
 - required
   - `gitlab_version`  
-  Specific version of Gitlab-Runner. Default value is `9.5.0`.
+  Specific version of Gitlab-Runner. Default value is `10.5`.
   - `gitlab_ci_token`
   A Token you obtained to register the Runner. Default value is ``.
 
@@ -51,6 +53,8 @@ Requirements
   0 does not mean unlimited. Default value is `ansible_processor_vcpus`
     - `gitlab_runner_request_concurrency`  
   Limit number of concurrent requests for new jobs from GitLab. Default value is `1`
+    - `gitlab_runner_env_vars`  
+  Append or overwrite environment variables. Default value is `["ENV=value", "LC_ALL=en_US.UTF-8"]`
   - `packages_additional`  
   Install additional packages for all installs. Default value is `[]`
   - `gitlab_runner_gpg`  
@@ -66,7 +70,7 @@ Example Playbook
 ### Installing gitlab-runner to centos 7:
 ```yaml
 - name: Converge
-  hosts: ansible_role_gitlab_runner_ct
+  hosts: rhel_family
   roles:
     - role: ansible-role-gitlab-runner
       vars:
@@ -77,7 +81,7 @@ Example Playbook
 ### Installing gitlab-runner to ubuntu 18.04:
 ```yaml
 - name: Converge
-  hosts: ansible_role_gitlab_runner_ct
+  hosts: debian_family
   roles:
     - role: ansible-role-gitlab-runner
       vars:
@@ -89,7 +93,7 @@ Example Playbook
 License
 -------
 
-Apache2
+Apache
 
 Author Information
 ------------------

@@ -1,5 +1,5 @@
 ---
-- name: Converge | Centos
+- name: Run test on centos
   hosts: rhel_family
   roles:
     - role: ansible-role-gitlab-runner
@@ -7,7 +7,7 @@
         gitlab_runner_concurrent: 1
         gitlab_runner_skip_registration: True
 
-- name: Converge | Ubuntu
+- name: Run test on ubuntu
   hosts: debian_family
   roles:
     - role: ansible-role-gitlab-runner

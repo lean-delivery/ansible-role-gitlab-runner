@@ -1,14 +1,17 @@
 ---
 # defaults file for ansible-role-gitlab-runner
 
-gitlab_version: "9.5.0"
-gitlab_runner_package: "{{ gitlab_version is \
-version_compare('10.0', '>=', strict=True) | ternary('gitlab-runner','gitlab-ci-multi-runner') }}"
+gitlab_version: "10.5"
+gitlab_runner_package: >-
+    {{ gitlab_version is version('10.0', '>=', strict=True) |
+    ternary('gitlab-runner','gitlab-ci-multi-runner') }}
 gitlab_host: git.epam.com
 gitlab_url: "https://{{ gitlab_host }}/ci"
 gitlab_ci_token: ""
 gitlab_runner_description: >-
-    {{ ansible_fqdn }} {{ ansible_distribution }} {{ ansible_distribution_major_version }}
+    {{ ansible_fqdn }}
+    {{ ansible_distribution }}
+    {{ ansible_distribution_major_version }}
 gitlab_runner_tags: "delegated"
 gitlab_runner_untagged_builds_run: "False"
 gitlab_runner_lock_to_project: "False"

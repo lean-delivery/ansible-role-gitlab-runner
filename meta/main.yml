@@ -20,6 +20,6 @@ galaxy_info:
     - "development"
     - "system"
     - "packaging"
-    - "gitlab-runner"
+    - "gitlabrunner"
 
 dependencies: []
