@@ -4,7 +4,7 @@ gitlab-runner role
 [![License](https://img.shields.io/badge/license-Apache-green.svg?style=flat)](https://raw.githubusercontent.com/lean-delivery/ansible-role-gitlab-runner/master/LICENSE)
 [![Build Status](https://travis-ci.org/lean-delivery/ansible-role-gitlab-runner.svg?branch=master)](https://travis-ci.org/lean-delivery/ansible-role-gitlab-runner)
 [![Build Status](https://gitlab.com/lean-delivery/ansible-role-gitlab-runner/badges/master/build.svg)](https://gitlab.com/lean-delivery/ansible-role-gitlab-runner)
-[![Galaxy](https://img.shields.io/badge/galaxy-lean__delivery.docker-blue.svg)](https://galaxy.ansible.com/lean_delivery/docker)
+[![Galaxy](https://img.shields.io/badge/galaxy-lean__delivery.gitlab__runner-blue.svg)](https://galaxy.ansible.com/lean_delivery/gitlab_runner)
 ![Ansible](https://img.shields.io/ansible/role/d/29089.svg)
 ![Ansible](https://img.shields.io/badge/dynamic/json.svg?label=min_ansible_version&url=https%3A%2F%2Fgalaxy.ansible.com%2Fapi%2Fv1%2Froles%2F29089%2F&query=$.min_ansible_version)
 
