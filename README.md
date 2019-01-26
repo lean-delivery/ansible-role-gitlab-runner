@@ -62,6 +62,12 @@ Requirements
 
 ## Some examples of the installing current role
 
+With [playlabs](https://yourlabs.io/oss/playlabs) you can install this role with just one command, ie:
+
+    playlabs install lean_delivery.gitlab_runner @localhost gitlab_ci_token=yourcommand gitlab_host=yourlabs.io gitlab_runner_limit=4 gitlab_version=11.6 
+
+Or, without playlabs, install with galaxy so that you can use with your playbook:
+
 ansible-galaxy install lean_delivery.gitlab-runner
 
 Example Playbook
