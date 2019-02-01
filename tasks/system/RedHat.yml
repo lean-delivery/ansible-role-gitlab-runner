@@ -2,16 +2,16 @@
 - name: Add GitLab Runner GPG key
   rpm_key:
     state: present
-    key: "{{ gitlab_runner_gpg }}"
+    key: '{{ gitlab_runner_gpg }}'
   become: True
 
 - name: Add GitLab Runner repository
   yum_repository:
     name: runner_{{ gitlab_runner_package }}
-    baseurl: "{{ gitlab_runner_repo }}"
+    baseurl: '{{ gitlab_runner_repo }}'
     gpgcheck: False
     repo_gpgcheck: False
-    gpgkey: "{{ gitlab_runner_gpg }}"
+    gpgkey: '{{ gitlab_runner_gpg }}'
     sslverify: True
     sslcacert: /etc/pki/tls/certs/ca-bundle.crt
     metadata_expire: 300
@@ -20,7 +20,7 @@
 
 - name: Install GitLab agent {{ gitlab_runner_install_package }}
   yum:
-    name: "{{ gitlab_runner_install_package }}"
+    name: '{{ gitlab_runner_install_package }}'
     state: present
     update_cache: True
   register: installed_gitlab

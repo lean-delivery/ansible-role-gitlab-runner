@@ -6,6 +6,7 @@ stages:
 
 before_script:
   - ansible --version
+  - ansible-lint --version
   - molecule --version
 #  - ansible-config dump --only-changed
 
@@ -21,25 +22,25 @@ Ansible lint:
   after_script:
     - rm -rf ~/ansible-lint-rules
   tags:
-    - delegated
+    - aws
 
-.Docker docker:
+.Docker ansible-role-gitlab-runner:
   stage: deployment test
   script:
     - molecule test -s default
   tags:
-    - docker
+    - aws
 
-AWS docker:
+AWS ansible-role-gitlab-runner:
   variables:
-    EPC_REGION: AWS-EUCENTRAL
+    AWS_REGION: us-east-1
   stage: deployment test
   script:
-    - molecule test -s cloud-aws-delegated
+    - molecule test -s cloud-aws-direct
   tags:
-    - delegated
+    - aws
 
-EPC docker:
+.EPC ansible-role-gitlab-runner:
   variables:
     EPC_REGION: EPAM-BY2
   stage: deployment test

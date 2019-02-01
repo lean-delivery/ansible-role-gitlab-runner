@@ -10,7 +10,7 @@
 - name: install ansible selinux configure libraries
   become: True
   package:
-    name: "{{ pkg_name }}"
+    name: '{{ pkg_name }}'
     state: present
   register: installed_selinux_extralibs
   until: installed_selinux_extralibs is succeeded
