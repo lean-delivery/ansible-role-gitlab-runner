@@ -7,10 +7,6 @@
 - name: Prepare system
   include_tasks: prepare-gitlab-runner.yml
 
-- name: adding selinux support
-  include_tasks: selinux-support.yml
-  when: ansible_os_family == 'RedHat'
-
 - name: Configure system
   include_tasks: '{{ platform }}'
   with_first_found:

@@ -36,7 +36,7 @@
   failed_when: runner_registered.rc != 0
   when:
     - not gitlab_runner_skip_registration
-    - gitlab_ci_token | length > 0
+    - gitlab_ci_token | length
     - not (gitlab_runner_description in configured_runners.stderr)
   environment: "{{ gitlab_runner_config.params }}"
   no_log: True

@@ -2,7 +2,7 @@ import os
 
 import testinfra.utils.ansible_runner
 
-group_name = 'rhel_family'
+group_name = 'all'
 
 testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
     os.environ['MOLECULE_INVENTORY_FILE']).get_hosts(group_name)
