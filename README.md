@@ -51,9 +51,9 @@ Requirements
   Limits how many jobs globally can be run concurrently.
   The most upper limit of jobs using all defined runners. 
   0 does not mean unlimited. Default value is `ansible_processor_vcpus`
-    - `gitlab_runner_request_concurrency`  
+  - `gitlab_runner_request_concurrency`  
   Limit number of concurrent requests for new jobs from GitLab. Default value is `1`
-    - `gitlab_runner_env_vars`  
+  - `gitlab_runner_env_vars`  
   Append or overwrite environment variables. Default value is `["ENV=value", "LC_ALL=en_US.UTF-8"]`
   - `packages_additional`  
   Install additional packages for all installs. Default value is `[]`
