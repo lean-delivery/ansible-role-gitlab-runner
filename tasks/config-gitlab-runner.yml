@@ -8,7 +8,8 @@
     backrefs: True
   notify: restart gitlab-runner
   loop:
-    - {param: 'concurrent', value: '{{ global_section.concurrent }}'}
+    - param: concurrent
+      value: '{{ global_section.concurrent }}'
   vars:
     global_section: "{{ gitlab_runner_config.global }}"
   become: True
