@@ -38,13 +38,15 @@ Requirements
   - `gitlab_host`  
   Docker gitlab server. Default value is `git.epam.com`
   - `gitlab_runner_tags`  
-  The tags associated with the Runner. Default value is `delegated`
+  The tags associated with the Runner. Should be comma delimited. Default value is `delegated`
   - `gitlab_runner_untagged_builds_run`  
   Config that prevents it from picking untagged jobs. Default value is `False`
   - `gitlab_runner_lock_to_project`  
   Config that lock the Runner to current project. Default value is `False`
   - `gitlab_runner_executor`  
   Runner executor. Default value is `shell`
+  - `gitlab_runner_extra_options`  
+  Extra option for runner registration process. Default value is `undefined`  
   - `gitlab_runner_limit`  
   Config that Limit how many jobs can be handled concurrently by this token. `0` simply means don't limit. Default value is `1`
   - `gitlab_runner_concurrent`  

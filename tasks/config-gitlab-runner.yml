@@ -8,10 +8,36 @@
     backrefs: True
   notify: restart gitlab-runner
   loop:
-    - {param: "concurrent", value: "{{ global_section.concurrent }}"}
+    - param: concurrent
+      value: '{{ global_section.concurrent }}'
   vars:
     global_section: "{{ gitlab_runner_config.global }}"
   become: True
 
 - name: Force all notified handlers to run
   meta: flush_handlers
+
+- name: List all configured runners
+  command: gitlab-runner list
+  register: configured_runners
+  failed_when: configured_runners.rc != 0
+  changed_when: False
+
+- name: register gitlab-runner
+  command: >-
+          gitlab-runner register
+          {% for env_var in gitlab_runner_env_vars %}
+          --env '{{ env_var }}'
+          {% endfor %}
+          {% if gitlab_runner_extra_options is defined %}
+          '{{ gitlab_runner_extra_options }}'
+          {% endif %}
+  register: runner_registered
+  become: True
+  failed_when: runner_registered.rc != 0
+  when:
+    - not gitlab_runner_skip_registration
+    - gitlab_ci_token | length
+    - not (gitlab_runner_description in configured_runners.stderr)
+  environment: "{{ gitlab_runner_config.params }}"
+  no_log: True
