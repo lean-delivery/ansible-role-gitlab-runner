@@ -24,7 +24,7 @@ Ansible lint:
   tags:
     - aws
 
-.Docker ansible-role-gitlab-runner:
+Docker ansible-role-gitlab-runner:
   stage: deployment test
   script:
     - molecule test -s default
@@ -40,7 +40,7 @@ AWS ansible-role-gitlab-runner:
   tags:
     - aws
 
-.EPC ansible-role-gitlab-runner:
+EPC ansible-role-gitlab-runner:
   variables:
     EPC_REGION: EPAM-BY2
   stage: deployment test
