@@ -1,31 +1,33 @@
 ---
-- name: Add GitLab Runner GPG key
-  rpm_key:
-    state: present
-    key: '{{ gitlab_runner_gpg }}'
-  become: True
+- name: Become section
+  block:
+    - name: Add GitLab Runner GPG key
+      rpm_key:
+        state: present
+        key: '{{ gitlab_runner_gpg }}'
+      register: rpm_key_result
+      until: rpm_key_result is succeeded
 
-- name: Add GitLab Runner repository
-  yum_repository:
-    name: runner_{{ gitlab_runner_package }}
-    baseurl: '{{ gitlab_runner_repo }}'
-    gpgcheck: False
-    repo_gpgcheck: False
-    gpgkey: '{{ gitlab_runner_gpg }}'
-    sslverify: True
-    sslcacert: /etc/pki/tls/certs/ca-bundle.crt
-    metadata_expire: 300
-    description: GitLab Runner Stable
-  become: True
+    - name: Add GitLab Runner repository
+      yum_repository:
+        name: runner_{{ gitlab_runner_package }}
+        baseurl: '{{ gitlab_runner_repo }}'
+        gpgcheck: False
+        repo_gpgcheck: False
+        gpgkey: '{{ gitlab_runner_gpg }}'
+        sslverify: True
+        sslcacert: /etc/pki/tls/certs/ca-bundle.crt
+        metadata_expire: 300
+        description: GitLab Runner Stable
 
-- name: Install GitLab agent {{ gitlab_runner_install_package }}
-  yum:
-    name: '{{ gitlab_runner_install_package }}'
-    state: present
-    update_cache: True
-  register: installed_gitlab
-  until: installed_gitlab is succeeded
-  notify: kick gitlab-runner
+    - name: Install GitLab agent {{ gitlab_runner_install_package }}
+      yum:
+        name: '{{ gitlab_runner_install_package }}'
+        state: present
+        update_cache: True
+      register: installed_gitlab
+      until: installed_gitlab is succeeded
+      notify: kick gitlab-runner
   become: True
 
 - name: Adding selinux support

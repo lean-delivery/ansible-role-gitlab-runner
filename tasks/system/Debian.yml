@@ -1,21 +1,23 @@
 ---
-- name: Add GitLab Runner GPG key
-  apt_key:
-    url: '{{ gitlab_runner_gpg }}'
-  become: True
+- name: Become section
+  block:
+    - name: Add GitLab Runner GPG key
+      apt_key:
+        url: '{{ gitlab_runner_gpg }}'
+      register: apt_key_result
+      until: apt_key_result is succeeded
 
-- name: Add GitLab Runner repository
-  apt_repository:
-    repo: '{{ gitlab_runner_repo }}'
-    validate_certs: True
-  become: True
+    - name: Add GitLab Runner repository
+      apt_repository:
+        repo: '{{ gitlab_runner_repo }}'
+        validate_certs: True
 
-- name: Install GitLab agent {{ gitlab_runner_install_package }}
-  apt:
-    name: '{{ gitlab_runner_install_package }}'
-    state: present
-    update_cache: True
-  register: installed_gitlab
-  until: installed_gitlab is succeeded
-  notify: kick gitlab-runner
+    - name: Install GitLab agent {{ gitlab_runner_install_package }}
+      apt:
+        name: '{{ gitlab_runner_install_package }}'
+        state: present
+        update_cache: True
+      register: installed_gitlab
+      until: installed_gitlab is succeeded
+      notify: kick gitlab-runner
   become: True
