@@ -13,9 +13,19 @@ def test_gitlab_runner_package_is_installed(host):
     for package in ["gitlab-runner", "gitlab-ci-multi-runner"]:
         with host.sudo():
             package = host.package(package)
-            if package.is_installed and package.version.startswith("10.5"):
+            if package.is_installed:
                 flag = True
     assert flag
+
+
+def test_gitlab_runner_version(host):
+    command = host.run('gitlab-runner --version')
+    assert command.rc == 0
+
+
+def test_gitlab_ci_multi_runner_version(host):
+    command = host.run('gitlab-ci-multi-runner --version')
+    assert command.rc == 0
 
 
 def test_gitlab_runner_service_running_and_enabled(host):

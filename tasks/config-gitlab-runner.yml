@@ -5,14 +5,14 @@
     regexp: '^(.*){{ item.param }} ='
     line: '\1{{ item.param }} = {{ item.value }}'
     state: present
-    backrefs: True
+    backrefs: true
   notify: restart gitlab-runner
   loop:
     - param: concurrent
       value: '{{ global_section.concurrent }}'
   vars:
-    global_section: "{{ gitlab_runner_config.global }}"
-  become: True
+    global_section: '{{ gitlab_runner_config.global }}'
+  become: true
 
 - name: Force all notified handlers to run
   meta: flush_handlers
@@ -21,7 +21,7 @@
   command: gitlab-runner list
   register: configured_runners
   failed_when: configured_runners.rc != 0
-  changed_when: False
+  changed_when: false
 
 - name: register gitlab-runner
   command: >-
@@ -33,11 +33,11 @@
           '{{ gitlab_runner_extra_options }}'
           {% endif %}
   register: runner_registered
-  become: True
+  become: true
   failed_when: runner_registered.rc != 0
   when:
     - not gitlab_runner_skip_registration
     - gitlab_ci_token | length
     - not (gitlab_runner_description in configured_runners.stderr)
-  environment: "{{ gitlab_runner_config.params }}"
-  no_log: True
+  environment: '{{ gitlab_runner_config.params }}'
+  no_log: true

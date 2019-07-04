@@ -5,6 +5,6 @@
   service:
     name: gitlab-runner
     state: restarted
-    enabled: True
+    enabled: true
   listen: kick gitlab-runner
-  become: True
+  become: true

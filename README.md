@@ -34,15 +34,15 @@ Requirements
 
 - defaults
   - `gitlab_runner_skip_registration`  
-  Skip gitlab-runner registration after installation. Default value is `False`    
+  Skip gitlab-runner registration after installation. Default value is `false`    
   - `gitlab_host`  
   Docker gitlab server. Default value is `git.epam.com`
   - `gitlab_runner_tags`  
   The tags associated with the Runner. Should be comma delimited. Default value is `delegated`
   - `gitlab_runner_untagged_builds_run`  
-  Config that prevents it from picking untagged jobs. Default value is `False`
+  Config that prevents it from picking untagged jobs. Default value is `false`
   - `gitlab_runner_lock_to_project`  
-  Config that lock the Runner to current project. Default value is `False`
+  Config that lock the Runner to current project. Default value is `false`
   - `gitlab_runner_executor`  
   Runner executor. Default value is `shell`
   - `gitlab_runner_extra_options`  
@@ -83,7 +83,7 @@ Example Playbook
     - role: ansible-role-gitlab-runner
       vars:
         gitlab_runner_concurrent: 1
-        gitlab_runner_skip_registration: True
+        gitlab_runner_skip_registration: true
 ```
 
 ### Installing gitlab-runner to ubuntu 18.04:
@@ -95,7 +95,7 @@ Example Playbook
       vars:
         gitlab_runner_concurrent: 1
         gitlab_version: "10.5"
-        gitlab_runner_skip_registration: True
+        gitlab_runner_skip_registration: true
 ```
 
 License
