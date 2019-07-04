@@ -107,4 +107,4 @@ Author Information
 ------------------
 
 authors:
-  - Lean Delivery <team@lean-delivery.com>
+  - Lean Delivery Team <team@lean-delivery.com>

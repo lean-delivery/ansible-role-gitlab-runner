@@ -10,12 +10,12 @@ lint:
   options:
     config-file: .yamllint
 platforms:
-  - name: test-docker-centos7-ansible-role-gitlab-runner
+  - name: test-docker-centos7-gitlab-runner
     image: leandelivery/docker-systemd:centos7
     privileged: true
     groups:
       - rhel_family
-  - name: test-docker-ubuntu1804-ansible-role-gitlab-runner
+  - name: test-docker-ubuntu1804-gitlab-runner
     image: leandelivery/docker-systemd:ubuntu-18.04
     privileged: true
     security_opts:
