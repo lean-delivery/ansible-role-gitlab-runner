@@ -12,10 +12,10 @@
       yum_repository:
         name: runner_{{ gitlab_runner_package }}
         baseurl: '{{ gitlab_runner_repo }}'
-        gpgcheck: False
-        repo_gpgcheck: False
+        gpgcheck: false
+        repo_gpgcheck: false
         gpgkey: '{{ gitlab_runner_gpg }}'
-        sslverify: True
+        sslverify: true
         sslcacert: /etc/pki/tls/certs/ca-bundle.crt
         metadata_expire: 300
         description: GitLab Runner Stable
@@ -24,11 +24,11 @@
       yum:
         name: '{{ gitlab_runner_install_package }}'
         state: present
-        update_cache: True
+        update_cache: true
       register: installed_gitlab
       until: installed_gitlab is succeeded
       notify: kick gitlab-runner
-  become: True
+  become: true
 
 - name: Adding selinux support
   include_tasks: selinux-support.yml

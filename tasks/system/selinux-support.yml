@@ -1,0 +1,19 @@
+---
+- name: Install ansible selinux support library
+  package:
+    name: libselinux-python
+    state: present
+  register: status
+  until: status is succeeded
+  become: true
+
+- name: Install ansible selinux configure libraries
+  package:
+    name:
+      - policycoreutils-python
+      - libsemanage-python
+    state: present
+  register: status
+  until: status is succeeded
+  become: true
+  when: ansible_selinux.status == 'enabled'

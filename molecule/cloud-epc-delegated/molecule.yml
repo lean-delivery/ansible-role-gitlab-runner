@@ -10,14 +10,14 @@ lint:
   options:
     config-file: .yamllint
 platforms:
-  - name: test-epc-centos7-ansible-role-gitlab-runner
+  - name: test-epc-centos7-gitlab-runner
     image: CentOS7_64-bit
     shape: small
     region: EPAM-BY2
     wait_timeout: 3600
     groups:
       - rhel_family
-  - name: test-epc-ubuntu1804-ansible-role-gitlab-runner
+  - name: test-epc-ubuntu1804-gitlab-runner
     image: Ubuntu18.04_64-bit
     shape: small
     region: EPAM-BY2
@@ -26,7 +26,7 @@ platforms:
       - debian_family
 provisioner:
   name: ansible
-  log: True
+  log: true
   playbooks:
     create: ../resources/provisioning/EPC/create.yml
     prepare: ../resources/provisioning/EPC/prepare.yml

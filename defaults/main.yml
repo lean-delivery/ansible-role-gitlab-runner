@@ -3,7 +3,7 @@
 
 gitlab_version: '10.5'
 gitlab_runner_package: >-
-    {{ gitlab_version is version('10.0', '>=', strict=True) |
+    {{ gitlab_version is version('10.0', '>=', strict=true) |
     ternary('gitlab-runner','gitlab-ci-multi-runner') }}
 gitlab_host: git.epam.com
 gitlab_url: 'https://{{ gitlab_host }}/ci'
@@ -13,8 +13,8 @@ gitlab_runner_description: >-
     {{ ansible_distribution }}
     {{ ansible_distribution_major_version }}
 gitlab_runner_tags: delegated
-gitlab_runner_untagged_builds_run: 'False'
-gitlab_runner_lock_to_project: 'False'
+gitlab_runner_untagged_builds_run: true
+gitlab_runner_lock_to_project: false
 gitlab_runner_executor: shell
 gitlab_runner_limit: 1
 gitlab_runner_concurrent: '{{ ansible_processor_vcpus }}'
@@ -36,10 +36,10 @@ gitlab_runner_config:
     RUNNER_TAG_LIST: '{{ gitlab_runner_tags }}'
     RUNNER_LIMIT: '{{ gitlab_runner_limit }}'
     RUNNER_REQUEST_CONCURRENCY: '{{ gitlab_runner_request_concurrency }}'
-    REGISTER_NON_INTERACTIVE: True
+    REGISTER_NON_INTERACTIVE: true
   global:
     concurrent: '{{ gitlab_runner_concurrent }}'
-gitlab_runner_skip_registration: False
+gitlab_runner_skip_registration: false
 
 packages_additional: []
 
