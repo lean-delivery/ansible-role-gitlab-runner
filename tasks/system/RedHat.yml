@@ -29,6 +29,10 @@
       until: installed_gitlab is succeeded
       notify: kick gitlab-runner
   become: true
+  tags:
+    - always
 
 - name: Adding selinux support
   include_tasks: selinux-support.yml
+  tags:
+    - always

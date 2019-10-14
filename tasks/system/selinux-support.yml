@@ -6,6 +6,8 @@
   register: status
   until: status is succeeded
   become: true
+  tags:
+    - always
 
 - name: Install ansible selinux configure libraries
   package:
@@ -17,3 +19,5 @@
   until: status is succeeded
   become: true
   when: ansible_selinux.status == 'enabled'
+  tags:
+    - always

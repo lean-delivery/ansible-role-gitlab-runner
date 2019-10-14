@@ -37,8 +37,9 @@ gitlab_runner_config:
     RUNNER_LIMIT: '{{ gitlab_runner_limit }}'
     RUNNER_REQUEST_CONCURRENCY: '{{ gitlab_runner_request_concurrency }}'
     REGISTER_NON_INTERACTIVE: true
-  global:
+  global_values:
     concurrent: '{{ gitlab_runner_concurrent }}'
+  global_strings: {}
 gitlab_runner_skip_registration: false
 
 packages_additional: []
