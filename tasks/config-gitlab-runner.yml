@@ -36,18 +36,6 @@
   tags:
     - always
 
-- name: disabling unsecure logging by default (override using tag 'unsecure_log')
-  set_fact:
-    no_logs: true
-  tags:
-    - always
-
-- name: enabling unsecure logging
-  set_fact:
-    no_logs: false
-  tags:
-    - unsecure_logs
-
 - name: register gitlab-runner
   command: >-
           gitlab-runner register
@@ -65,6 +53,6 @@
     - gitlab_ci_token | length
     - not (gitlab_runner_description in configured_runners.stderr)
   environment: '{{ gitlab_runner_config.params }}'
-  no_log: "{{ no_logs | bool }}"
+  no_log: "{{ no_logs | default(true) | bool }}"
   tags:
     - always

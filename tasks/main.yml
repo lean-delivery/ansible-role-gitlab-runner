@@ -9,7 +9,6 @@
 - name: Prepare system
   include_tasks: prepare-gitlab-runner.yml
   tags:
-    - unsecure_logs
     - setup
 
 - name: Configure system
@@ -21,11 +20,9 @@
     loop_var: platform
   tags:
     - setup
-    - unsecure_logs
 
 - name: Configure gitlab-runner daemon
   include_tasks: config-gitlab-runner.yml
   tags:
     - setup
-    - unsecure_logs
     - upd_conf

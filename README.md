@@ -33,6 +33,8 @@ Requirements
   A Token you obtained to register the Runner. Default value is ``.
 
 - defaults
+  - `no_logs`  
+  Hide sensitive information from logs. Default value is `true`
   - `gitlab_runner_skip_registration`  
   Skip gitlab-runner registration after installation. Default value is `false`
   - `gitlab_host`  
