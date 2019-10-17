@@ -7,7 +7,7 @@
     state: present
     backrefs: true
   notify: restart gitlab-runner
-  with_dict: "{{ gitlab_runner_config.global_values | default({}) }}"
+  loop: "{{ gitlab_runner_config.global_values | default({}) | dict2items }}"
   become: true
   tags:
     - always
@@ -18,7 +18,7 @@
     line: '{{ item.key }} = "{{ item.value }}"'
     state: present
   notify: restart gitlab-runner
-  with_dict: "{{ gitlab_runner_config.global_strings | default({}) }}"
+  loop: "{{ gitlab_runner_config.global_strings | default({}) | dict2items }}"
   become: true
   tags:
     - always
