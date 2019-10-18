@@ -1,5 +1,5 @@
 ---
-# tasks file for ansible-role-docker
+# tasks file for gitlab-runner
 
 - name: Incule variables
   include_vars: '{{ ansible_os_family }}.yml'

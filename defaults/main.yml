@@ -1,5 +1,5 @@
 ---
-# defaults file for ansible-role-gitlab-runner
+# defaults file for gitlab-runner
 
 gitlab_version: '10.5'
 gitlab_runner_package: >-

@@ -8,13 +8,21 @@ galaxy_info:
   min_ansible_version: 2.7
   issue_tracker_url: https://github.com/lean-delivery/ansible-role-gitlab-runner/issues
   platforms:
-    - name: 'Ubuntu'
+    - name: "Ubuntu"
       versions:
-        - 'bionic'
-        - 'xenial'
-    - name: 'EL'
+        - "xenial"
+        - "bionic"
+    - name: "Debian"
       versions:
-        - '7'
+        - "stretch"
+    - name: "EL"
+      versions:
+        - "7"
+        - "8"
+    - name: "Amazon"
+      versions:
+        - "2017.12"
+        - "Candidate"
 
   galaxy_tags:
     - 'development'
