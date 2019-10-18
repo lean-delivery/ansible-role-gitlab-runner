@@ -2,7 +2,7 @@
 packages_base:
   - gnupg
   - apt-transport-https
-  # - debian-archive-keyring
+  - debian-archive-keyring
   - ca-certificates
 gitlab_runner_install_package: "{{ gitlab_runner_package }}\
 {{ (gitlab_version != 'latest') | ternary('=' ~ gitlab_version ~ '*', '') }}"

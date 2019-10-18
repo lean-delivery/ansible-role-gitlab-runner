@@ -30,7 +30,7 @@ Lint:
   tags:
     - aws
 
-Docker gitlab-runner:
+.Docker gitlab-runner:
   stage: deployment test
   script:
     - molecule test -s default
@@ -46,7 +46,7 @@ AWS gitlab-runner:
   tags:
     - aws
 
-EPC gitlab-runner:
+.EPC gitlab-runner:
   variables:
     EPC_REGION: EPAM-BY2
   stage: deployment test
