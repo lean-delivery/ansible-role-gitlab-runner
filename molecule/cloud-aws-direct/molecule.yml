@@ -26,7 +26,7 @@ platforms:
       - rhel_family
 
   - name: test-aws-ubuntu18-gitlab-runner
-    image: ami-012fd5eb46f56731f
+    image: ami-04b9e92b5572fa0d1
     platform: ubuntu18
     instance_type: m5.large
     region: us-east-1
