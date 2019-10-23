@@ -21,8 +21,9 @@
   yum_repository:
     name: PowerTools
     enabled: true
-    baseurl: http://mirror.cs.vt.edu/pub/CentOS/8.0.1905/PowerTools/x86_64/os/
+    baseurl: http://mirror.centos.org/centos/8.0.1905/PowerTools/x86_64/os/
     description: CentOS-8 - PowerTools
+    file: CentOS-PowerTools
   become: true
   register: repo_debug
   when:
