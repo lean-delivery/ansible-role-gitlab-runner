@@ -25,6 +25,7 @@
     mirrorlist: http://mirrorlist.centos.org/?release=8&arch=x86_64&repo=PowerTools&infra=stock
     baseurl: http://mirror.cs.vt.edu/pub/CentOS/8.0.1905/PowerTools/x86_64/os/
     description: CentOS-8 - PowerTools
+  become: true
   when:
     - ansible_os_family == "RedHat"
     - ansible_distribution_major_version == '8'
