@@ -30,24 +30,6 @@
     - ansible_os_family == "RedHat"
     - ansible_distribution_major_version == '8'
 
-- name: Debug with commnand
-  command: yum repolist
-  become: true
-  when:
-    - ansible_os_family == "RedHat"
-    - ansible_distribution_major_version == '8'
-  tags:
-   - skip_ansible_lint
-
-- name: Debug with commnand
-  command: yum config-manager --set-enabled PowerTools
-  become: true
-  when:
-    - ansible_os_family == "RedHat"
-    - ansible_distribution_major_version == '8'
-  tags:
-   - skip_ansible_lint
-
 - name: Install required packages
   package:
     name: '{{ packages_base | union(packages_additional) | unique }}'
