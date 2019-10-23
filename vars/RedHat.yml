@@ -2,6 +2,7 @@
 packages_base:
   - yum-utils
   - ca-certificates
+  - python3-devel
 
 pip_packages:
   - pygpgme
