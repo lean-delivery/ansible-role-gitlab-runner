@@ -6,6 +6,15 @@
   when: ansible_distribution == 'Ubuntu'
   become: true
 
+- name: Install EPEL repo
+  yum:
+    name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+    state: present
+  register: epel_repo_install
+  until: epel_repo_install is succeeded
+  become: true
+  when: ansible_distribution_version == '8'
+
 - name: Install required packages
   package:
     name: '{{ packages_base | union(packages_additional) | unique }}'
