@@ -13,7 +13,9 @@
   register: epel_repo_install
   until: epel_repo_install is succeeded
   become: true
-  when: ansible_distribution_version == '8'
+  when:
+    - ansible_os_family == "RedHat"
+    - ansible_lsb.major_release | int == 8
 
 - name: Install required packages
   package:
@@ -30,4 +32,6 @@
   register: installed_packages
   until: installed_packages is succeeded
   become: true
-  when: ansible_distribution_version == '8'
+  when:
+    - ansible_os_family == "RedHat"
+    - ansible_lsb.major_release | int == 8
