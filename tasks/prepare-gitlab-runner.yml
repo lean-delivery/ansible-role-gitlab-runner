@@ -17,6 +17,19 @@
     - ansible_os_family == "RedHat"
     - ansible_distribution_major_version == '8'
 
+- name: Install PowerTools repo
+  yum_repository:
+    name: PowerTools
+    baseurl: https://download.fedoraproject.org/pub/epel/$releasever/$basearch/
+    state: present
+    description: CentOS-8 - PowerTools
+  register: repo_install
+  until: repo_install is succeeded
+  become: true
+  when:
+    - ansible_os_family == "RedHat"
+    - ansible_distribution_major_version == '8'
+
 - name: Install required packages
   package:
     name: '{{ packages_base | union(packages_additional) | unique }}'
