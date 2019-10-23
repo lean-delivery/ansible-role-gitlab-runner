@@ -1,11 +1,8 @@
 ---
 packages_base:
   - yum-utils
-  - ca-certificates
-
-pip_packages:
   - pygpgme
-
+  - ca-certificates
 
 gitlab_runner_install_package: "{{ gitlab_runner_package }}\
 {{ (gitlab_version != 'latest') | ternary('-' ~ gitlab_version ~ '*', '') }}"

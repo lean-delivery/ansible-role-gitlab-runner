@@ -13,12 +13,3 @@
   register: installed_packages
   until: installed_packages is succeeded
   become: true
-
-- name: Install required pip packages
-  pip:
-    name: '{{ pip_packages }}'
-    state: present
-  register: installed_packages
-  until: installed_packages is succeeded
-  become: true
-  when: ansible_os_family == 'RedHat'
