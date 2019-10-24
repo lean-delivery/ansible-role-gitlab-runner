@@ -20,6 +20,17 @@
         metadata_expire: 300
         description: GitLab Runner Stable
 
+    - name: yum-clean-all
+      command: yum clean all
+      args:
+        warn: false
+      become: true
+      when:
+        - ansible_os_family == "RedHat"
+        - ansible_distribution_major_version == '8'
+      tags:
+        - skip_ansible_lint
+
     - name: Install GitLab agent {{ gitlab_runner_install_package }}
       yum:
         name: '{{ gitlab_runner_install_package }}'
