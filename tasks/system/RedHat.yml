@@ -20,8 +20,8 @@
         metadata_expire: 300
         description: GitLab Runner Stable
 
-    - name: yum-clean-all
-      command: yum clean all
+    - name: dnf clean all
+      command: dnf clean all
       args:
         warn: false
       become: true
