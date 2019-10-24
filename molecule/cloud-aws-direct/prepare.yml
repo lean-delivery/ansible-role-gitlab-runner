@@ -6,7 +6,7 @@
   hosts: rhel8
   tasks:
 
-    - name: Install libnsl
+    - name: Install python3-devel
       yum:
         name: python3-devel
         state: present
