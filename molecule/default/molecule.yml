@@ -34,12 +34,14 @@ provisioner:
   # log: true
   lint:
     name: ansible-lint
+  config_options:
+    defaults:
+      callback_whitelist: profile_tasks,timer
+  playbooks:
+    verify: ../resources/tests/verify.yml
 scenario:
   name: default
 verifier:
-  name: testinfra
-  options:
-    verbose: true
-  directory: ../resources/tests/
+  name: ansible
   lint:
-    name: flake8
+    name: ansible-lint
