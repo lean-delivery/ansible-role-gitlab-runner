@@ -18,7 +18,7 @@ Requirements
 ------------
 
  - Version of the ansible for installation: 2.5
- - **Supported OS**:  
+ - **Supported OS**:
    - EL
      - 7
    - Ubuntu
@@ -29,12 +29,14 @@ Requirements
 - required
   - `gitlab_version`  
   Specific version of Gitlab-Runner. Default value is `10.5`.
-  - `gitlab_ci_token`
+  - `gitlab_ci_token`  
   A Token you obtained to register the Runner. Default value is ``.
 
 - defaults
+  - `no_logs`  
+  Hide sensitive information from logs. Default value is `true`
   - `gitlab_runner_skip_registration`  
-  Skip gitlab-runner registration after installation. Default value is `false`    
+  Skip gitlab-runner registration after installation. Default value is `false`
   - `gitlab_host`  
   Docker gitlab server. Default value is `git.epam.com`
   - `gitlab_runner_tags`  
@@ -46,12 +48,12 @@ Requirements
   - `gitlab_runner_executor`  
   Runner executor. Default value is `shell`
   - `gitlab_runner_extra_options`  
-  Extra option for runner registration process. Default value is `undefined`  
+  Extra option for runner registration process. Default value is `undefined`
   - `gitlab_runner_limit`  
   Config that Limit how many jobs can be handled concurrently by this token. `0` simply means don't limit. Default value is `1`
   - `gitlab_runner_concurrent`  
   Limits how many jobs globally can be run concurrently.
-  The most upper limit of jobs using all defined runners. 
+  The most upper limit of jobs using all defined runners.
   0 does not mean unlimited. Default value is `ansible_processor_vcpus`
   - `gitlab_runner_request_concurrency`  
   Limit number of concurrent requests for new jobs from GitLab. Default value is `1`
@@ -60,13 +62,23 @@ Requirements
   - `packages_additional`  
   Install additional packages for all installs. Default value is `[]`
   - `gitlab_runner_gpg`  
-  GPG key for Debian. Default value is `https://packages.gitlab.com/gpg.key`  
+  GPG key for Debian. Default value is `https://packages.gitlab.com/gpg.key`
+
+- advanced configuration
+  - `gitlab_runner_config`  
+  Dictionary used for advanced configs:
+    - `params`  
+    Environment variables used during the registration process
+    - `global_values`  
+    Dictionary with *key:value* used to add/change ***non string values*** in the file "config.toml"
+    - `global_strings`  
+    Dictionary with *key:value* used to add/change ***string values*** in the file "config.toml"
 
 ## Some examples of the installing current role
 
 With [playlabs](https://yourlabs.io/oss/playlabs) you can install this role with just one command, ie:
 
-    playlabs install lean_delivery.gitlab_runner @localhost gitlab_ci_token=yourcommand gitlab_host=yourlabs.io gitlab_runner_limit=4 gitlab_version=11.6 
+    playlabs install lean_delivery.gitlab_runner @localhost gitlab_ci_token=yourcommand gitlab_host=yourlabs.io gitlab_runner_limit=4 gitlab_version=11.6
 
 Or, without playlabs, install with galaxy so that you can use with your playbook:
 

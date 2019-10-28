@@ -1,27 +1,40 @@
 ---
-- name: Set advanced configuration | global section
+- name: Set advanced configuration | global section values
   lineinfile:
     dest: /etc/gitlab-runner/config.toml
-    regexp: '^(.*){{ item.param }} ='
-    line: '\1{{ item.param }} = {{ item.value }}'
+    regexp: '^(.*){{ item.key }} ='
+    line: '\1{{ item.key }} = {{ item.value }}'
     state: present
     backrefs: true
   notify: restart gitlab-runner
-  loop:
-    - param: concurrent
-      value: '{{ global_section.concurrent }}'
-  vars:
-    global_section: '{{ gitlab_runner_config.global }}'
+  loop: "{{ gitlab_runner_config.global_values | default({}) | dict2items }}"
   become: true
+  tags:
+    - always
+
+- name: Set advanced configuration | global section strings
+  lineinfile:
+    dest: /etc/gitlab-runner/config.toml
+    line: '{{ item.key }} = "{{ item.value }}"'
+    state: present
+  notify: restart gitlab-runner
+  loop: "{{ gitlab_runner_config.global_strings | default({}) | dict2items }}"
+  become: true
+  tags:
+    - always
 
 - name: Force all notified handlers to run
   meta: flush_handlers
+  tags:
+    - always
 
 - name: List all configured runners
   command: gitlab-runner list
   register: configured_runners
   failed_when: configured_runners.rc != 0
   changed_when: false
+  tags:
+    - always
 
 - name: register gitlab-runner
   command: >-
@@ -29,9 +42,9 @@
           {% for env_var in gitlab_runner_env_vars %}
           --env '{{ env_var }}'
           {% endfor %}
-          {% if gitlab_runner_extra_options is defined %}
-          '{{ gitlab_runner_extra_options }}'
-          {% endif %}
+          {% for extra_option in gitlab_runner_extra_options %}
+          {{ extra_option }}
+          {% endfor %}
   register: runner_registered
   become: true
   failed_when: runner_registered.rc != 0
@@ -40,4 +53,6 @@
     - gitlab_ci_token | length
     - not (gitlab_runner_description in configured_runners.stderr)
   environment: '{{ gitlab_runner_config.params }}'
-  no_log: true
+  no_log: "{{ no_logs | default(true) | bool }}"
+  tags:
+    - always

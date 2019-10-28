@@ -4,3 +4,5 @@
     msg: |
        This role does not support '{{ ansible_os_family }}' platform.
        Please contact support@lean-delivery.com
+  tags:
+    - always

@@ -8,3 +8,5 @@
     enabled: true
   listen: kick gitlab-runner
   become: true
+  tags:
+    - always

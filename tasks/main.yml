@@ -3,9 +3,13 @@
 
 - name: Incule variables
   include_vars: '{{ ansible_os_family }}.yml'
+  tags:
+    - always
 
 - name: Prepare system
   include_tasks: prepare-gitlab-runner.yml
+  tags:
+    - setup
 
 - name: Configure system
   include_tasks: '{{ platform }}'
@@ -14,6 +18,11 @@
     - system/not-supported.yml
   loop_control:
     loop_var: platform
+  tags:
+    - setup
 
 - name: Configure gitlab-runner daemon
   include_tasks: config-gitlab-runner.yml
+  tags:
+    - setup
+    - upd_conf
