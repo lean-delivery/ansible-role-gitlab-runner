@@ -17,7 +17,7 @@
         gpgkey: '{{ gitlab_runner_gpg }}'
         sslverify: true
         sslcacert: /etc/pki/tls/certs/ca-bundle.crt
-        metadata_expire: 300
+        metadata_expire: '300'
         description: GitLab Runner Stable
 
     - name: Install GitLab agent {{ gitlab_runner_install_package }}
