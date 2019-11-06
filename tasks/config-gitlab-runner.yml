@@ -42,9 +42,11 @@
           {% for env_var in gitlab_runner_env_vars %}
           --env '{{ env_var }}'
           {% endfor %}
+          {% if gitlab_runner_extra_options is defined %}
           {% for extra_option in gitlab_runner_extra_options %}
           {{ extra_option }}
           {% endfor %}
+          {% endif %}
   register: runner_registered
   become: true
   failed_when: runner_registered.rc != 0
