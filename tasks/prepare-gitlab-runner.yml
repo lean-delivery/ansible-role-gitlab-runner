@@ -18,19 +18,6 @@
   tags:
     - always
 
-- name: Install packages on centos
-  yum:
-    name: python-pip
-    state: present
-  retries: 300
-  delay: 20
-  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
-  register: pip_installed_centos
-  until: pip_installed_centos is succeeded
-  become: true
-  tags:
-    - always
-
 - name: Install Python gitlab module
   pip:
     name: python-gitlab==1.12.1
