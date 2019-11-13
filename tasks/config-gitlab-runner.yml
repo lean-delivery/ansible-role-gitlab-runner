@@ -37,16 +37,16 @@
     - always
 
 - name: register gitlab-runner
-  command: >-
-          gitlab-runner register
-          {% for env_var in gitlab_runner_env_vars %}
-          --env '{{ env_var }}'
-          {% endfor %}
-          {% if gitlab_runner_extra_options is defined %}
-          {% for extra_option in gitlab_runner_extra_options %}
-          {{ extra_option }}
-          {% endfor %}
-          {% endif %}
+  gitlab_runner:
+    api_url: '{{ CI_SERVER_URL }}'
+    api_token: "sT-va2NnS8zQHH2hjo3S"
+    registration_token: '{{ REGISTRATION_TOKEN }}'
+    description: '{{ RUNNER_NAME }}'
+    state: present
+    active: True
+    tag_list: '{{ RUNNER_TAG_LIST }}'
+    run_untagged: '{{ REGISTER_RUN_UNTAGGED }}'
+    locked: False
   register: runner_registered
   become: true
   failed_when: runner_registered.rc != 0
