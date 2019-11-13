@@ -17,3 +17,8 @@
   become: true
   tags:
     - always
+
+- name: Install Python gitlab module
+  pip:
+    name: python-gitlab
+    executable: pip3
