@@ -33,7 +33,7 @@ Docker gitlab-runner:
   tags:
     - aws
 
-.AWS gitlab-runner:
+AWS gitlab-runner:
   variables:
     AWS_REGION: us-east-1
   stage: deployment test
