@@ -39,7 +39,7 @@
 - name: register gitlab-runner
   gitlab_runner:
     url: "https://git.epam.com/"
-    api_token: "sT-va2NnS8zQHH2hjo3S"
+    api_token: "Dps7cqnWihUNzy_kswMe"
     registration_token: '{{ gitlab_ci_token }}'
     description: '{{ gitlab_runner_description }}'
     state: present
