@@ -26,14 +26,14 @@ Lint:
   tags:
     - aws
 
-.Docker gitlab-runner:
+Docker gitlab-runner:
   stage: deployment test
   script:
     - molecule test -s default
   tags:
     - aws
 
-AWS gitlab-runner:
+.AWS gitlab-runner:
   variables:
     AWS_REGION: us-east-1
   stage: deployment test

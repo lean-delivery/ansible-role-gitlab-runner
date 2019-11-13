@@ -31,6 +31,17 @@
   tags:
     - always
 
+- name: Install python pip on debian
+  apt:
+    name: python-pip
+    state: present
+  when: ansible_distribution == 'Ubuntu'
+  register: pip_installed
+  until: pip_installed is succeeded
+  become: true
+  tags:
+    - always
+
 - name: Install Python gitlab module
   pip:
     name: python-gitlab
