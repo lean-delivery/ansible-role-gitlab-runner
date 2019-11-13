@@ -4,6 +4,7 @@ packages_base:
   - apt-transport-https
   - debian-archive-keyring
   - ca-certificates
+  - python-pip
 
 gitlab_runner_install_package: "{{ gitlab_runner_package }}\
 {{ (gitlab_version != 'latest') | ternary('=' ~ gitlab_version ~ '*', '') }}"
