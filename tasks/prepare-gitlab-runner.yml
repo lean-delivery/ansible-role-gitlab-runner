@@ -48,6 +48,7 @@
   pip:
     name: python-gitlab
     state: present
+    executable: pip2
   register: pip_result
   until: pip_result is succeeded
   become: true
