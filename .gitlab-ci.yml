@@ -26,7 +26,7 @@ Lint:
   tags:
     - aws
 
-Docker gitlab-runner:
+.Docker gitlab-runner:
   stage: deployment test
   script:
     - molecule test -s default

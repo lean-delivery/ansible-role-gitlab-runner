@@ -48,8 +48,6 @@
   pip:
     name: python-gitlab
     state: present
-  retries: 300
-  delay: 20
   register: pip_result
   until: pip_result is succeeded
   become: true
