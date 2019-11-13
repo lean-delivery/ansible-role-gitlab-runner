@@ -38,7 +38,7 @@
 
 - name: register gitlab-runner
   gitlab_runner:
-    api_url: "https://git.epam.com/"
+    url: "https://git.epam.com/"
     api_token: "sT-va2NnS8zQHH2hjo3S"
     registration_token: '{{ gitlab_ci_token }}'
     description: '{{ gitlab_runner_description }}'
@@ -52,7 +52,7 @@
   #failed_when: runner_registered.rc != 0
   when:
     - gitlab_ci_token | length
-  environment: '{{ gitlab_runner_config.params }}'
+  #environment: '{{ gitlab_runner_config.params }}'
   #no_log: "{{ no_logs | default(true) | bool }}"
   tags:
     - always
