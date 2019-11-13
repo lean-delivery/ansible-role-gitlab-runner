@@ -43,10 +43,10 @@
     registration_token: '{{ gitlab_ci_token }}'
     description: '{{ gitlab_runner_description }}'
     state: present
-    active: True
+    active: true
     tag_list: '{{ gitlab_runner_tags }}'
     run_untagged: '{{ gitlab_runner_untagged_builds_run }}'
-    locked: False
+    locked: false
   register: runner_registered
   become: true
   failed_when: runner_registered.rc != 0
