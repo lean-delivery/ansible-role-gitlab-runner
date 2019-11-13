@@ -8,9 +8,19 @@
   tags:
     - always
 
+- name: Install required packages
+  package:
+    name: '{{ packages_base | union(packages_additional) | unique }}'
+    state: present
+  register: installed_packages
+  until: installed_packages is succeeded
+  become: true
+  tags:
+    - always
+
 - name: Install packages on centos
   yum:
-    name: '{{ packages_base | union(packages_additional) | unique }}'
+    name: python-pip
     state: present
   retries: 300
   delay: 20
@@ -23,7 +33,7 @@
 
 - name: Install packages on ubuntu
   apt:
-    name: '{{ packages_base | union(packages_additional) | unique }}'
+    name: python-pip
     state: present
   retries: 300
   delay: 20
