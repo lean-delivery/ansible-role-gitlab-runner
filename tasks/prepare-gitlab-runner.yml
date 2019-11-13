@@ -20,6 +20,17 @@
   tags:
     - always
 
+- name: Install python pip on centos
+  yum:
+    name: python-pip
+    state: present
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+  register: pip_installed
+  until: pip_installed is succeeded
+  become: true
+  tags:
+    - always
+
 - name: Install Python gitlab module
   pip:
     name: python-gitlab
