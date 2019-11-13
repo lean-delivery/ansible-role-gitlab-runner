@@ -6,8 +6,8 @@ gitlab_runner_package: >-
     {{ gitlab_version is version('10.0', '>=', strict=true) |
     ternary('gitlab-runner','gitlab-ci-multi-runner') }}
 gitlab_host: git.epam.com
-gitlab_url: 'https://{{ gitlab_host }}/ci'
-gitlab_ci_token: 'hvY_53mLxvZuySLqCBYX'
+gitlab_url: 'https://{{ gitlab_host }}/'
+gitlab_ci_token: ''
 gitlab_runner_description: >-
     {{ ansible_fqdn }}
     {{ ansible_distribution }}

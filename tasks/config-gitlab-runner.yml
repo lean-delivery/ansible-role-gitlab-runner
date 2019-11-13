@@ -38,19 +38,18 @@
 
 - name: register gitlab-runner
   gitlab_runner:
-    url: "https://git.epam.com/"
-    api_token: "Dps7cqnWihUNzy_kswMe"
+    url: "{{ gitlab_url }}"
+    api_token: ""
     registration_token: '{{ gitlab_ci_token }}'
     description: '{{ gitlab_runner_description }}'
     tag_list: '{{ gitlab_runner_tags }}'
     run_untagged: '{{ gitlab_runner_untagged_builds_run }}'
     state: present
-  register: runner_registered
   become: true
-  #failed_when: runner_registered.rc != 0
   when:
+    - not gitlab_runner_skip_registration
     - gitlab_ci_token | length
-  #environment: '{{ gitlab_runner_config.params }}'
-  #no_log: "{{ no_logs | default(true) | bool }}"
+    - not (gitlab_runner_description in configured_runners.stderr)
+  no_log: "{{ no_logs | default(true) | bool }}"
   tags:
     - always
