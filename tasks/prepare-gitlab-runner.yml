@@ -46,9 +46,9 @@
 
 - name: Install Python gitlab module
   pip:
-    name: python-gitlab
+    name: python-gitlab==1.12.1
     state: present
-    executable: pip2
+    executable: '{{ pip_executable }}'
   register: pip_result
   until: pip_result is succeeded
   become: true
