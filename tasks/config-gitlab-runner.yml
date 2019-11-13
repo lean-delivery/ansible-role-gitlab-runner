@@ -38,14 +38,14 @@
 
 - name: register gitlab-runner
   gitlab_runner:
-    api_url: '{{ CI_SERVER_URL }}'
+    api_url: '{{ gitlab_url }}'
     api_token: "sT-va2NnS8zQHH2hjo3S"
-    registration_token: '{{ REGISTRATION_TOKEN }}'
-    description: '{{ RUNNER_NAME }}'
+    registration_token: '{{ gitlab_ci_token }}'
+    description: '{{ gitlab_runner_description }}'
     state: present
     active: True
-    tag_list: '{{ RUNNER_TAG_LIST }}'
-    run_untagged: '{{ REGISTER_RUN_UNTAGGED }}'
+    tag_list: '{{ gitlab_runner_tags }}'
+    run_untagged: '{{ gitlab_runner_untagged_builds_run }}'
     locked: False
   register: runner_registered
   become: true
