@@ -12,6 +12,8 @@
   package:
     name: '{{ packages_base | union(packages_additional) | unique }}'
     state: present
+  retries: 300
+  delay: 20
   register: installed_packages
   until: installed_packages is succeeded
   become: true
@@ -22,6 +24,8 @@
   pip:
     name: python-gitlab
     state: present
+  retries: 300
+  delay: 20
   register: pip_result
   until: pip_result is succeeded
   become: true
