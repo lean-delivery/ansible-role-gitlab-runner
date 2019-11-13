@@ -31,19 +31,6 @@
   tags:
     - always
 
-- name: Install packages on ubuntu
-  apt:
-    name: python-pip
-    state: present
-  retries: 300
-  delay: 20
-  when: ansible_distribution == 'Ubuntu'
-  register: pip_installed_ubuntu
-  until: pip_installed_ubuntu is succeeded
-  become: true
-  tags:
-    - always
-
 - name: Install Python gitlab module
   pip:
     name: python-gitlab==1.12.1
