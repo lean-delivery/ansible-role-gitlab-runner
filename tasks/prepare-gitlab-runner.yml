@@ -8,36 +8,28 @@
   tags:
     - always
 
-- name: Install required packages
-  package:
+- name: Install python pip on centos
+  yum:
     name: '{{ packages_base | union(packages_additional) | unique }}'
     state: present
   retries: 300
   delay: 20
-  register: installed_packages
-  until: installed_packages is succeeded
-  become: true
-  tags:
-    - always
-
-- name: Install python pip on centos
-  yum:
-    name: python-pip
-    state: present
   when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
-  register: pip_installed
-  until: pip_installed is succeeded
+  register: pip_installed_centos
+  until: pip_installed_centos is succeeded
   become: true
   tags:
     - always
 
-- name: Install python pip on debian
+- name: Install python pip on ubuntu
   apt:
-    name: python-pip
+    name: '{{ packages_base | union(packages_additional) | unique }}'
     state: present
+  retries: 300
+  delay: 20
   when: ansible_distribution == 'Ubuntu'
-  register: pip_installed
-  until: pip_installed is succeeded
+  register: pip_installed_ubuntu
+  until: pip_installed_ubuntu is succeeded
   become: true
   tags:
     - always
