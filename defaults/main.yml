@@ -40,7 +40,7 @@ gitlab_runner_config:
   global_values:
     concurrent: '{{ gitlab_runner_concurrent }}'
   global_strings: {}
-gitlab_runner_skip_registration: false
+gitlab_runner_skip_registration: true
 
 packages_additional: []
 
