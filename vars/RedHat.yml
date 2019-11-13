@@ -1,5 +1,6 @@
 ---
 packages_base:
+  - epel-release
   - yum-utils
   - pygpgme
   - ca-certificates
