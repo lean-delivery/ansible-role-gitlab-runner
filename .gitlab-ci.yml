@@ -38,7 +38,7 @@ AWS gitlab-runner:
     AWS_REGION: us-east-1
   stage: deployment test
   script:
-    - molecule test -s cloud-aws-direct
+    - molecule create -s cloud-aws-direct
   tags:
     - aws
 

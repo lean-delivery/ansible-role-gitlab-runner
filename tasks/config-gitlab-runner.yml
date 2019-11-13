@@ -49,7 +49,7 @@
     locked: false
   register: runner_registered
   become: true
-  failed_when: runner_registered.rc != 0
+  #failed_when: runner_registered.rc != 0
   when:
     - gitlab_ci_token | length
   environment: '{{ gitlab_runner_config.params }}'
