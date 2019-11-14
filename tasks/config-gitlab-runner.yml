@@ -22,9 +22,8 @@
     run_untagged: '{{ gitlab_runner_untagged_builds_run }}'
     state: present
   become: true
-  no_log: '{{ no_logs | default(true) | bool }}'
   register: gitlab_runner_token
-  changed_when: 'gitlab_runner_token.changed is true'
+  changed_when: gitlab_runner_token.changed is true
   tags:
     - always
 
