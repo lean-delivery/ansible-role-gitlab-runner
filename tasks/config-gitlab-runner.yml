@@ -38,7 +38,7 @@
 
 - name: register gitlab-runner
   gitlab_runner:
-    url: "{{ gitlab_url }}"
+    url: '{{ gitlab_url }}'
     api_token: ""
     registration_token: '{{ gitlab_ci_token }}'
     description: '{{ gitlab_runner_description }}'
