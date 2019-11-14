@@ -24,6 +24,7 @@
   become: true
   no_log: '{{ no_logs | default(true) | bool }}'
   register: gitlab_runner_token
+  changed_when: 'gitlab_runner_token.changed is true'
   tags:
     - always
 
@@ -31,7 +32,6 @@
   template:
     src: config.toml.j2
     dest: /etc/gitlab-runner/config.toml
-  when: gitlab_runner_token.runner.roken | default (false) | bool
   notify: restart gitlab-runner
   become: true
   tags:
