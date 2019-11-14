@@ -47,7 +47,7 @@
     state: present
   become: true
   when:
-    - not gitlab_runner_skip_registration
+    - not gitlab_runner_skip_registration|bool
     - gitlab_ci_token | length
     - not (gitlab_runner_description in configured_runners.stderr)
   no_log: "{{ no_logs | default(true) | bool }}"
