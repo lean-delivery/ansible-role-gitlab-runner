@@ -23,6 +23,12 @@
     state: present
   become: true
   register: gitlab_runner_token
+  changed_when: gitlab_runner_token.changed
+  when:
+    - not gitlab_runner_skip_registration
+    - gitlab_ci_token | length
+    - not (gitlab_runner_description in configured_runners.stderr)
+  no_log: "{{ no_logs | default(true) | bool }}"
   tags:
     - always
 
@@ -32,13 +38,9 @@
     dest: /etc/gitlab-runner/config.toml
   notify: restart gitlab-runner
   become: true
+  when:
+    - not gitlab_runner_skip_registration
+    - gitlab_ci_token | length
+    - not (gitlab_runner_description in configured_runners.stderr)
   tags:
     - always
-
-- name: Check gitlab runner config
-  shell: cat /etc/gitlab-runner/config.toml
-  register: gitlabconfig
-
-- name: get config of gitlab runner
-  debug:
-    var: gitlabconfig

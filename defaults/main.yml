@@ -7,8 +7,8 @@ gitlab_runner_package: >-
     ternary('gitlab-runner','gitlab-ci-multi-runner') }}
 gitlab_host: git.epam.com
 gitlab_url: 'https://{{ gitlab_host }}/'
-gitlab_ci_token: 'gZLn3Qg2DjMWQyZwA4Ur'
-gitlab_api_token: '2uRG3-Hofsq21uA-FPos'
+gitlab_ci_token: ''
+gitlab_api_token: ''
 gitlab_runner_description: >-
     {{ ansible_fqdn }}
     {{ ansible_distribution }}
