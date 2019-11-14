@@ -36,4 +36,9 @@
     - always
 
 - name: Check gitlab runner config
-  debug: "msg={{ lookup('file', '/etc/gitlab-runner/config.toml') }}"
+  shell: cat /etc/gitlab-runner/config.toml
+  register: gitlabconfig
+
+- name: get config of gitlab runner
+  debug:
+    var: gitlabconfig
