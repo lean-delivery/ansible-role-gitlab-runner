@@ -8,6 +8,24 @@
   tags:
     - always
 
+- name: Install EPEL repo.
+  yum:
+    name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-{{ ansible_distribution_major_version }}.noarch.rpm
+    state: present
+  when: ansible_distribution == 'CentOS'
+  become: true
+  tags:
+    - always
+
+- name: Import EPEL GPG key.
+  rpm_key:
+    key: /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }}
+    state: present
+  when: ansible_distribution == 'CentOS'
+  become: true
+  tags:
+    - always
+
 - name: Install required packages
   package:
     name: '{{ packages_base | union(packages_additional) | unique }}'
@@ -17,17 +35,6 @@
   become: true
   tags:
     - always
-
-#- name: Install packages on centos
-#  yum:
-#    name: python-pip
-#    state: present
-#  when: ansible_distribution == 'CentOS'
-#  register: pip_installed_centos
-#  until: pip_installed_centos is succeeded
-#  become: true
-#  tags:
-#   - always
 
 - name: Install Python gitlab module
   pip:
