@@ -13,6 +13,8 @@
     name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-{{ ansible_distribution_major_version }}.noarch.rpm
     state: present
   when: ansible_distribution == 'CentOS'
+  register: install_epel
+  until: install_epel is succeeded
   become: true
   tags:
     - always
@@ -22,6 +24,8 @@
     key: /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }}
     state: present
   when: ansible_distribution == 'CentOS'
+  register: install_epel_key
+  until: install_epel_key is succeeded
   become: true
   tags:
     - always
