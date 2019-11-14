@@ -42,4 +42,4 @@
     - always
 
 - name: Check gitlab runner config
-  debug: msg="{{ lookup('file', '/etc/gitlab-runner/config.toml') }}"
+  debug: "msg={{ lookup('file', '/etc/gitlab-runner/config.toml') }}"
