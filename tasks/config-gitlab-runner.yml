@@ -1,28 +1,4 @@
 ---
-- name: Set advanced configuration | global section values
-  lineinfile:
-    dest: /etc/gitlab-runner/config.toml
-    regexp: '^(.*){{ item.key }} ='
-    line: '\1{{ item.key }} = {{ item.value }}'
-    state: present
-    backrefs: true
-  notify: restart gitlab-runner
-  loop: "{{ gitlab_runner_config.global_values | default({}) | dict2items }}"
-  become: true
-  tags:
-    - always
-
-- name: Set advanced configuration | global section strings
-  lineinfile:
-    dest: /etc/gitlab-runner/config.toml
-    line: '{{ item.key }} = "{{ item.value }}"'
-    state: present
-  notify: restart gitlab-runner
-  loop: "{{ gitlab_runner_config.global_strings | default({}) | dict2items }}"
-  become: true
-  tags:
-    - always
-
 - name: Force all notified handlers to run
   meta: flush_handlers
   tags:
@@ -51,5 +27,19 @@
     - gitlab_ci_token | length
     - not (gitlab_runner_description in configured_runners.stderr)
   no_log: '{{ no_logs | default(true) | bool }}'
+  register: gitlab_runner_token
   tags:
     - always
+
+- name: Create config.toml for gitlab runner from jinja2 template
+  template:
+    src: config.toml.j2
+    dest: /etc/gitlab-runner/config.toml
+  when: gitlab_runner_token.runner.roken | default (false) | bool
+  notify: restart gitlab-runner
+  become: true
+  tags:
+    - always
+
+- name: Check gitlab runner config
+  debug: msg="{{ lookup('file', '/etc/gitlab-runner/config.toml') }}"
