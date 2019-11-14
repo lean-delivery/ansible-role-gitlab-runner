@@ -23,7 +23,6 @@
     state: present
   become: true
   register: gitlab_runner_token
-  changed_when: gitlab_runner_token.changed is true
   tags:
     - always
 
