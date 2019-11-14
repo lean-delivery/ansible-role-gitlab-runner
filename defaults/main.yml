@@ -8,11 +8,13 @@ gitlab_runner_package: >-
 gitlab_host: git.epam.com
 gitlab_url: 'https://{{ gitlab_host }}/'
 gitlab_ci_token: ''
+gitlab_api_token: ''
 gitlab_runner_description: >-
     {{ ansible_fqdn }}
     {{ ansible_distribution }}
     {{ ansible_distribution_major_version }}
 gitlab_runner_tags: ['delegated']
+gitlab_runner_python_module_version: '1.12.1'
 gitlab_runner_untagged_builds_run: true
 gitlab_runner_lock_to_project: false
 gitlab_runner_executor: shell

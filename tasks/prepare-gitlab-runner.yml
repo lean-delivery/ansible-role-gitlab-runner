@@ -24,7 +24,7 @@
     state: present
   retries: 300
   delay: 20
-  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+  when: ansible_distribution == 'CentOS'
   register: pip_installed_centos
   until: pip_installed_centos is succeeded
   become: true
@@ -33,7 +33,7 @@
 
 - name: Install Python gitlab module
   pip:
-    name: python-gitlab==1.12.1
+    name: ' python-gitlab=={{ gitlab_runner_python_module_version }}'
     state: present
     executable: '{{ pip_executable }}'
   register: pip_result
