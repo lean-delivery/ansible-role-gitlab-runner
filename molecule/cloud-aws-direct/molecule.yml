@@ -11,7 +11,7 @@ lint:
     config-file: .yamllint
 platforms:
   - name: test-aws-centos7-gitlab-runner
-    image: ami-5ee66f20
+    image: ami-9887c6e7
     platform: centos7
     instance_type: m5.large
     region: us-east-1
