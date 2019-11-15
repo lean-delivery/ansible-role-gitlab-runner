@@ -1,16 +1,4 @@
 ---
-- name: Check variables
-  template:
-    src: /root/ansible/config.toml.j2
-    dest: /etc/gitlab-runner/config.toml
-
-- name: Replace array
-  lineinfile:
-    path: /etc/gitlab-runner/config.toml
-    regexp: '^token'
-    line: 'token = "{{ gitlab_runner_token_after_reg }}"'
-
-
 - name: Force all notified handlers to run
   meta: flush_handlers
   tags:
@@ -24,7 +12,7 @@
   tags:
     - always
 
-- name: register gitlab-runner
+- name: Register gitlab-runner
   gitlab_runner:
     url: '{{ gitlab_url }}'
     api_token: '{{ gitlab_api_token }}'
@@ -44,15 +32,13 @@
   tags:
     - always
 
-- name: Create config.toml for gitlab runner from jinja2 template
+- name: Create config.toml file using jinja2
   template:
-    src: config.toml.j2
+    src: /root/ansible/config.toml.j2
     dest: /etc/gitlab-runner/config.toml
-  notify: restart gitlab-runner
-  become: true
-  when:
-    - not gitlab_runner_skip_registration
-    - gitlab_ci_token | length
-    - not (gitlab_runner_description in configured_runners.stderr)
-  tags:
-    - always
+
+- name: Replace token lined
+  lineinfile:
+    path: /etc/gitlab-runner/config.toml
+    regexp: '^token'
+    line: 'token = "{{ gitlab_runner_token_after_reg }}"'
