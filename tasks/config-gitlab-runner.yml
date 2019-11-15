@@ -34,7 +34,7 @@
 
 - name: Create config.toml file using jinja2
   template:
-    src: /root/ansible/config.toml.j2
+    src: config.toml.j2
     dest: /etc/gitlab-runner/config.toml
 
 - name: Replace token lined
