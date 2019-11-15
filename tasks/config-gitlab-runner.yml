@@ -1,4 +1,16 @@
 ---
+- name: Check variables
+  template:
+    src: /root/ansible/config.toml.j2
+    dest: /etc/gitlab-runner/config.toml
+
+- name: Replace array
+  lineinfile:
+    path: /etc/gitlab-runner/config.toml
+    regexp: '^token'
+    line: 'token = "{{ gitlab_runner_token_after_reg }}"'
+
+
 - name: Force all notified handlers to run
   meta: flush_handlers
   tags:

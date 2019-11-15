@@ -1,16 +1,4 @@
-concurrent = {{ gitlab_runner_request_concurrency }}
-check_interval = 0
-
-[session_server]
-  session_timeout = 1800
-
+{{ gitlab_global_section | to_toml }}
+{{ gitlab_session_server_section | to_toml }}
 [[runners]]
-  name = '{{ gitlab_runner_description }}'
-  url = '{{ gitlab_url }}'
-  token = '{{ gitlab_runner_token.runner.token }}'
-  executor = '{{ gitlab_runner_executor }}'
-  environment = {{ gitlab_runner_env_vars }}
-  [runners.custom_build_dir]
-  [runners.cache]
-    [runners.cache.s3]
-    [runners.cache.gcs]
+{{ gitlab_runners_section | to_toml }}

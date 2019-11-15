@@ -21,28 +21,25 @@ gitlab_runner_executor: shell
 gitlab_runner_limit: 1
 gitlab_runner_concurrent: '{{ ansible_processor_vcpus }}'
 gitlab_runner_request_concurrency: 1
+gitlab_runner_skip_registration: false
 
 # https://gitlab.com/gitlab-org/gitlab-runner/issues/259
 gitlab_runner_env_vars:
   - 'ENV=value'
   - 'LC_ALL=en_US.UTF-8'
 
-gitlab_runner_config:
-  params:
-    REGISTRATION_TOKEN: '{{ gitlab_ci_token }}'
-    RUNNER_NAME: '{{ gitlab_runner_description }}'
-    CI_SERVER_URL: '{{ gitlab_url }}'
-    RUNNER_EXECUTOR: '{{ gitlab_runner_executor }}'
-    REGISTER_RUN_UNTAGGED: '{{ gitlab_runner_untagged_builds_run }}'
-    REGISTER_LOCKED: '{{ gitlab_runner_lock_to_project }}'
-    RUNNER_TAG_LIST: '{{ gitlab_runner_tags }}'
-    RUNNER_LIMIT: '{{ gitlab_runner_limit }}'
-    RUNNER_REQUEST_CONCURRENCY: '{{ gitlab_runner_request_concurrency }}'
-    REGISTER_NON_INTERACTIVE: true
-  global_values:
-    concurrent: '{{ gitlab_runner_concurrent }}'
-  global_strings: {}
-gitlab_runner_skip_registration: false
+gitlab_global_section:
+  concurrent: '{{ gitlab_runner_request_concurrency }}'
+  check_interval: 0
+gitlab_session_server_section:
+  session_server:
+  session_timeout: 1800
+gitlab_runners_section:
+  name: '{{ gitlab_runner_description }}'
+  url: '{{ gitlab_url }}'
+  token: "{{ gitlab_runner_token_after_reg }}"
+  executor: '{{ gitlab_runner_executor }}'
+  environment: '{{ gitlab_runner_env_vars }}'
 
 packages_additional: []
 
