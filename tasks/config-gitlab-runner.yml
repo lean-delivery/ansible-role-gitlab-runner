@@ -36,9 +36,11 @@
   template:
     src: config.toml.j2
     dest: /etc/gitlab-runner/config.toml
+  become: true
 
 - name: Replace token lined
   lineinfile:
     path: /etc/gitlab-runner/config.toml
     regexp: '^token'
     line: 'token = "{{ gitlab_runner_token.runner.token | default(omit) }}"'
+  become: true
