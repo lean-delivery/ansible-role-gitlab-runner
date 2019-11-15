@@ -37,7 +37,7 @@ gitlab_session_server_section:
 gitlab_runners_section:
   name: '{{ gitlab_runner_description }}'
   url: '{{ gitlab_url }}'
-  token: "{{ gitlab_runner_token_after_reg }}"
+  token: "{{ gitlab_runner_token.runner.token | default(omit) }}"
   executor: '{{ gitlab_runner_executor }}'
   environment: '{{ gitlab_runner_env_vars }}'
 
