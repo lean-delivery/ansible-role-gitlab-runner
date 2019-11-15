@@ -41,4 +41,4 @@
   lineinfile:
     path: /etc/gitlab-runner/config.toml
     regexp: '^token'
-    line: 'token = "{{ gitlab_runner_token_after_reg }}"'
+    line: 'token = "{{ gitlab_runner_token.runner.token | default(omit) }}"'
