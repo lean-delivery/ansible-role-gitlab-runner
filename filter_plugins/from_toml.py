@@ -9,7 +9,7 @@ author:
     - "Samy Coenen (contact@samycoenen.be)"
 '''
 
-import toml
+from toml import toml
 
 def to_toml(data):
     ''' Convert the value to TOML '''

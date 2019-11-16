@@ -41,14 +41,3 @@
     - gitlab_ci_token | length
     - not (gitlab_runner_description in configured_runners.stderr)
   become: true
-
-- name: Replace token line
-  lineinfile:
-    path: /etc/gitlab-runner/config.toml
-    regexp: '^token'
-    line: 'token = "{{ gitlab_runner_token.runner.token | default(omit) }}"'
-  when:
-    - not gitlab_runner_skip_registration
-    - gitlab_ci_token | length
-    - not (gitlab_runner_description in configured_runners.stderr)
-  become: true
