@@ -38,11 +38,11 @@
   until: installed_packages is succeeded
   become: true
   tags:
-    - always  
+    - always
 
 - name: Install Python gitlab module
   pip:
-    name: 
+    name:
       - 'python-gitlab=={{ gitlab_runner_python_module_version }}'
       - 'python-toml'
     state: present
