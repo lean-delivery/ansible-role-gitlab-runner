@@ -32,7 +32,6 @@ gitlab_global_section:
   concurrent: '{{ gitlab_runner_request_concurrency }}'
   check_interval: 0
 gitlab_session_server_section:
-  session_server:
   session_timeout: 1800
 gitlab_runners_section:
   name: '{{ gitlab_runner_description }}'

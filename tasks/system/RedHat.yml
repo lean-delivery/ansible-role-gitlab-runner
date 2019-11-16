@@ -28,6 +28,20 @@
       register: installed_gitlab
       until: installed_gitlab is succeeded
       notify: kick gitlab-runner
+
+      - name: Install EPEL repo.
+        yum:
+          name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-{{ ansible_distribution_major_version }}.noarch.rpm
+          state: present
+        register: install_epel
+        until: install_epel is succeeded
+
+      - name: Import EPEL GPG key.
+        rpm_key:
+          key: /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }}
+          state: present
+        register: install_epel_key
+        until: install_epel_key is succeeded
   become: true
   tags:
     - always

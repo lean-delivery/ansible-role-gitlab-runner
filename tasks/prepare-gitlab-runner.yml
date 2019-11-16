@@ -1,35 +1,4 @@
 ---
-- name: Add universe repository for Ubuntu
-  apt_repository:
-    repo: "deb http://archive.ubuntu.com/ubuntu {{ ansible_distribution_release }} universe"
-    state: present
-  when: ansible_distribution == 'Ubuntu'
-  become: true
-  tags:
-    - always
-
-- name: Install EPEL repo.
-  yum:
-    name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-{{ ansible_distribution_major_version }}.noarch.rpm
-    state: present
-  when: ansible_distribution == 'CentOS'
-  register: install_epel
-  until: install_epel is succeeded
-  become: true
-  tags:
-    - always
-
-- name: Import EPEL GPG key.
-  rpm_key:
-    key: /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }}
-    state: present
-  when: ansible_distribution == 'CentOS'
-  register: install_epel_key
-  until: install_epel_key is succeeded
-  become: true
-  tags:
-    - always
-
 - name: Install required packages
   package:
     name: '{{ packages_base | union(packages_additional) | unique }}'
@@ -37,18 +6,12 @@
   register: installed_packages
   until: installed_packages is succeeded
   become: true
-  tags:
-    - always
 
 - name: Install Python gitlab module
   pip:
-    name:
-      - 'python-gitlab=={{ gitlab_runner_python_module_version }}'
-      - 'python-toml'
+    name: 'python-gitlab=={{ gitlab_runner_python_module_version }}'
     state: present
     executable: '{{ pip_executable }}'
   register: pip_result
   until: pip_result is succeeded
   become: true
-  tags:
-    - always

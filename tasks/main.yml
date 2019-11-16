@@ -6,11 +6,6 @@
   tags:
     - always
 
-- name: Prepare system
-  include_tasks: prepare-gitlab-runner.yml
-  tags:
-    - setup
-
 - name: Configure system
   include_tasks: '{{ platform }}'
   with_first_found:
@@ -18,6 +13,11 @@
     - system/not-supported.yml
   loop_control:
     loop_var: platform
+  tags:
+    - setup
+
+- name: Prepare system
+  include_tasks: prepare-gitlab-runner.yml
   tags:
     - setup
 
