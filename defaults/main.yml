@@ -5,7 +5,7 @@ gitlab_version: '10.5'
 gitlab_runner_package: >-
     {{ gitlab_version is version('10.0', '>=', strict=true) |
     ternary('gitlab-runner','gitlab-ci-multi-runner') }}
-gitlab_host: git.epam.com
+gitlab_host: gitlab.com
 gitlab_url: 'https://{{ gitlab_host }}/'
 gitlab_ci_token: ''
 gitlab_api_token: ''
