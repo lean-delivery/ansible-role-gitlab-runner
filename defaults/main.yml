@@ -25,7 +25,6 @@ gitlab_runner_skip_registration: false
 
 # https://gitlab.com/gitlab-org/gitlab-runner/issues/259
 gitlab_runner_env_vars:
-  - 'ENV=value'
   - 'LC_ALL=en_US.UTF-8'
 
 gitlab_global_section:
