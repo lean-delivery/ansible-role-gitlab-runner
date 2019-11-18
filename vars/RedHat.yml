@@ -1,4 +1,7 @@
 ---
+pip_executable: pip
+python_executable: python
+
 packages_base:
   - yum-utils
   - pygpgme

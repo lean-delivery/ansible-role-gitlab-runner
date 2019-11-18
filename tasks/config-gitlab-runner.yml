@@ -23,7 +23,6 @@
     state: present
   become: true
   register: gitlab_runner_token
-  changed_when: gitlab_runner_token.changed
   when:
     - not gitlab_runner_skip_registration
     - gitlab_ci_token | length

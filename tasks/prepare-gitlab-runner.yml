@@ -11,7 +11,7 @@
   pip:
     name: 'python-gitlab=={{ gitlab_runner_python_module_version }}'
     state: present
-    executable: '{{ pip_executable }}'
+    executable: '{{ pip_executable | default(pip) }}'
   register: pip_result
   until: pip_result is succeeded
   become: true

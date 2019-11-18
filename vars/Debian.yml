@@ -1,10 +1,15 @@
 ---
+pip_executable: pip3
+python_executable: python3
+ansible_python_interpreter: /usr/bin/python3
+
 packages_base:
   - gnupg
   - apt-transport-https
   - debian-archive-keyring
   - ca-certificates
   - '{{ python_executable | default(python3) }}-pip'
+
 
 gitlab_runner_install_package: "{{ gitlab_runner_package }}\
 {{ (gitlab_version != 'latest') | ternary('=' ~ gitlab_version ~ '*', '') }}"
