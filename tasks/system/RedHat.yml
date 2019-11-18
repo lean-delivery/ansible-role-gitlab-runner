@@ -1,7 +1,7 @@
 ---
 - name: Become section
   block:
-    - name: Add GitLab Runner GPG key
+    - name: Install GitLab runner
       yum:
         name: 'https://gitlab-runner-downloads.s3.amazonaws.com/latest/rpm/gitlab-runner_amd64.rpm'
         state: present
