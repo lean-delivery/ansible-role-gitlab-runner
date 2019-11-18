@@ -3,16 +3,15 @@
   block:
     - name: Add universe repository for Ubuntu
       apt_repository:
-        repo: "deb http://archive.ubuntu.com/ubuntu {{ ansible_distribution_release }} universe"
+        repo: 'deb http://archive.ubuntu.com/ubuntu {{ ansible_distribution_release }} universe'
         state: present
-      become: true
+      when: ansible_distribution_release == 'bionic'
 
     - name: Install GitLab through deb package
       apt:
-        deb: 'https://gitlab-runner-downloads.s3.amazonaws.com/latest/deb/gitlab-runner_amd64.deb'
+        deb: '{{ gitlab_runner_deb_repo }}'
       register: install_gitlab_runner
       until: install_gitlab_runner is succeeded
-
   become: true
   tags:
     - always

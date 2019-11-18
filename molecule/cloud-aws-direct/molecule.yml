@@ -105,6 +105,7 @@ platforms:
     groups:
       - rhel_family
       - pip2
+      - amazon
 
 provisioner:
   name: ansible
@@ -114,6 +115,9 @@ provisioner:
       callback_whitelist: profile_tasks,timer
   inventory:
     group_vars:
+      amazon:
+        epel_repository_url: 'https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm'
+        epel_rpm_key: '/etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7'
       pip2:
         pip_executable: pip
         python_executable: python
