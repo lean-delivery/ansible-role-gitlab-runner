@@ -30,6 +30,6 @@ galaxy_info:
     - 'packaging'
     - 'gitlabrunner'
     - 'gitlab'
-    - 'CI/CD'
+    - 'ci/cd'
 
 dependencies: []
