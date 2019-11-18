@@ -5,6 +5,7 @@ python_executable: python3
 packages_base:
   - gnupg
   - apt-transport-https
+  - debian-archive-keyring
   - ca-certificates
   - '{{ python_executable | default("python3") }}-pip'
 

@@ -1,6 +1,12 @@
 ---
 - name: Become section
   block:
+    - name: Add universe repository for Ubuntu
+      apt_repository:
+        repo: "deb http://archive.ubuntu.com/ubuntu {{ ansible_distribution_release }} universe"
+        state: present
+      become: true
+
     - name: Install GitLab through deb package
       apt:
         deb: 'https://gitlab-runner-downloads.s3.amazonaws.com/latest/deb/gitlab-runner_amd64.deb'
