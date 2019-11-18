@@ -3,7 +3,7 @@
   block:
     - name: Add GitLab Runner GPG key
       yum:
-        name: 'https://gitlab-runner-downloads.s3.amazonaws.com/latest/rpm/gitlab-runner_amd.rpm'
+        name: 'https://gitlab-runner-downloads.s3.amazonaws.com/latest/rpm/gitlab-runner_amd64.rpm'
         state: present
       register: install_gitlab_runner
       until: install_gitlab_runner is succeeded
