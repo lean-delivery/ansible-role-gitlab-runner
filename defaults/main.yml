@@ -1,5 +1,6 @@
 ---
 # defaults file for ansible-role-gitlab-runner
+yum_libselinux_python_library: libselinux-python
 epel_repository_url: 'https://dl.fedoraproject.org/pub/epel/epel-release-latest-{{ ansible_distribution_major_version }}.noarch.rpm'
 epel_rpm_key: '/etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }}'
 gitlab_runner_deb_repo: https://gitlab-runner-downloads.s3.amazonaws.com/latest/deb/gitlab-runner_amd64.deb

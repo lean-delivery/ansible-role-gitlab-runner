@@ -1,6 +1,6 @@
 ---
 - name: Install ansible selinux support library
-  package:
+  yum:
     name: libselinux-python
     state: present
   register: status
@@ -10,7 +10,7 @@
     - always
 
 - name: Install ansible selinux configure libraries
-  package:
+  yum:
     name:
       - policycoreutils-python
       - libsemanage-python
