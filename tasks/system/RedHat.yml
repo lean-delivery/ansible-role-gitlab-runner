@@ -5,6 +5,8 @@
       yum:
         name: 'https://gitlab-runner-downloads.s3.amazonaws.com/latest/rpm/gitlab-runner_amd.rpm'
         state: present
+      register: install_gitlab_runner
+      until: install_gitlab_runner is succeeded
 
     - name: Install EPEL repo.
       yum:

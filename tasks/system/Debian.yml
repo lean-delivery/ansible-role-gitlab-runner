@@ -4,6 +4,8 @@
     - name: Install GitLab through deb package
       apt:
         deb: 'https://gitlab-runner-downloads.s3.amazonaws.com/latest/deb/gitlab-runner_amd64.deb'
+      register: install_gitlab_runner
+      until: install_gitlab_runner is succeeded
 
   become: true
   tags:
