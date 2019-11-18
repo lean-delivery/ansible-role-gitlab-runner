@@ -1,19 +1,19 @@
 ---
 - name: Become section
   block:
-    - name: Import EPEL GPG key
-      rpm_key:
-        key: '{{ epel_rpm_key }}'
-        state: present
-      register: install_epel_key
-      until: install_epel_key is succeeded
-
     - name: Install EPEL repo
       yum:
         name: '{{ epel_repository_url }}'
         state: present
       register: install_epel
       until: install_epel is succeeded
+
+    - name: Import EPEL GPG key
+      rpm_key:
+        key: '{{ epel_rpm_key }}'
+        state: present
+      register: install_epel_key
+      until: install_epel_key is succeeded
 
     - name: Install GitLab runner
       yum:
