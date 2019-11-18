@@ -1,7 +1,6 @@
 ---
 pip_executable: pip3
 python_executable: python3
-ansible_python_interpreter: /usr/bin/python3
 
 packages_base:
   - gnupg
