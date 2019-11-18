@@ -11,9 +11,7 @@
 
 - name: Install ansible selinux configure libraries
   yum:
-    name:
-      - policycoreutils-python
-      - libsemanage-python
+    name: '{{ yum_libselinux_config_libraries }}'
     state: present
   register: status
   until: status is succeeded

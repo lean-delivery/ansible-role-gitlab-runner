@@ -123,6 +123,9 @@ provisioner:
         python_executable: python
       pip3:
         yum_libselinux_python_library: python3-libselinux
+        yum_libselinux_config_libraries:
+          - python3-policycoreutils
+          - python3-libsemanage
         pip_executable: pip3
         python_executable: python3
         ansible_python_interpreter: /usr/bin/python3
