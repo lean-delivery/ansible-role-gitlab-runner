@@ -4,14 +4,6 @@
   tags:
     - always
 
-- name: List all configured runners
-  command: gitlab-runner list
-  register: configured_runners
-  failed_when: configured_runners.rc != 0
-  changed_when: false
-  tags:
-    - always
-
 - name: Register gitlab-runner
   gitlab_runner:
     url: '{{ gitlab_url }}'
@@ -26,7 +18,6 @@
   when:
     - not gitlab_runner_skip_registration
     - gitlab_ci_token | length
-    - not (gitlab_runner_description in configured_runners.stderr)
   no_log: "{{ no_logs | default(true) | bool }}"
   tags:
     - always
@@ -38,5 +29,4 @@
   when:
     - not gitlab_runner_skip_registration
     - gitlab_ci_token | length
-    - not (gitlab_runner_description in configured_runners.stderr)
   become: true
