@@ -1,15 +1,9 @@
 ---
-pip_executable: pip
-python_executable: python
+pip_executable: '{{ gitlab_runner_default_pip_executable_for_redhat }}'
+python_executable: '{{ gitlab_runner_default_python_executable_for_redhat }}'
 
-packages_base:
+gitlab_runner_packages_base:
   - yum-utils
   - pygpgme
   - ca-certificates
   - '{{ python_executable | default("python") }}-pip'
-
-gitlab_runner_install_package: "{{ gitlab_runner_package }}\
-{{ (gitlab_version != 'latest') | ternary('-' ~ gitlab_version ~ '*', '') }}"
-
-gitlab_runner_repo: "https://packages.gitlab.com/runner/\
-{{ gitlab_runner_package }}/el/{{ ansible_distribution_major_version }}/$basearch"

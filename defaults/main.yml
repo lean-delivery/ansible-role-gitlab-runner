@@ -1,10 +1,6 @@
 ---
 # defaults file for ansible-role-gitlab-runner
 
-gitlab_version: 'latest'
-gitlab_runner_package: >-
-    {{ gitlab_version is version('latest', '>=', strict=true) |
-    ternary('gitlab-runner','gitlab-ci-multi-runner') }}
 gitlab_host: gitlab.com
 gitlab_url: 'https://{{ gitlab_host }}/'
 gitlab_ci_token: ''
@@ -22,6 +18,10 @@ gitlab_runner_limit: 1
 gitlab_runner_concurrent: '{{ ansible_processor_vcpus }}'
 gitlab_runner_request_concurrency: 1
 gitlab_runner_skip_registration: false
+gitlab_runner_default_python_executable_for_debian: 'python3'
+gitlab_runner_default_pip_executable_for_debian: 'pip3'
+gitlab_runner_default_python_executable_for_redhat: 'python'
+gitlab_runner_default_pip_executable_for_redhat: 'pip'
 
 # https://gitlab.com/gitlab-org/gitlab-runner/issues/259
 gitlab_runner_env_vars:

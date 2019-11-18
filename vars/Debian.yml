@@ -1,19 +1,10 @@
 ---
-pip_executable: pip3
-python_executable: python3
+pip_executable: '{{ gitlab_runner_default_pip_executable_for_debian }}'
+python_executable: '{{ gitlab_runner_default_python_executable_for_debian }}'
 
-packages_base:
+gitlab_runner_packages_base:
   - gnupg
   - apt-transport-https
   - debian-archive-keyring
   - ca-certificates
   - '{{ python_executable | default("python3") }}-pip'
-
-
-gitlab_runner_install_package: >-
-   {{ gitlab_runner_package }}{{ (gitlab_version != 'latest')
-       | ternary('=' ~ gitlab_version ~ '*', '') }}
-
-gitlab_runner_repo: "deb https://packages.gitlab.com/runner/\
-{{ gitlab_runner_package }}/{{ ansible_distribution | lower }}\
-/ {{ ansible_distribution_release }} main"
