@@ -12,7 +12,8 @@ packages_base:
 
 
 gitlab_runner_install_package: >-
-{{ (gitlab_version != 'latest') | ternary('=' ~ gitlab_version ~ '*', '') }}"
+   {{ gitlab_runner_package }}{{ (gitlab_version != 'latest')
+       | ternary('=' ~ gitlab_version ~ '*', '') }}
 
 gitlab_runner_repo: "deb https://packages.gitlab.com/runner/\
 {{ gitlab_runner_package }}/{{ ansible_distribution | lower }}\
