@@ -2,32 +2,9 @@
 - name: Become section
   block:
     - name: Add GitLab Runner GPG key
-      rpm_key:
-        state: present
-        key: '{{ gitlab_runner_gpg }}'
-      register: rpm_key_result
-      until: rpm_key_result is succeeded
-
-    - name: Add GitLab Runner repository
-      yum_repository:
-        name: runner_{{ gitlab_runner_package }}
-        baseurl: '{{ gitlab_runner_repo }}'
-        gpgcheck: false
-        repo_gpgcheck: false
-        gpgkey: '{{ gitlab_runner_gpg }}'
-        sslverify: true
-        sslcacert: /etc/pki/tls/certs/ca-bundle.crt
-        metadata_expire: '300'
-        description: GitLab Runner Stable
-
-    - name: Install GitLab agent {{ gitlab_runner_install_package }}
       yum:
-        name: '{{ gitlab_runner_install_package }}'
+        name: 'https://gitlab-runner-downloads.s3.amazonaws.com/latest/rpm/gitlab-runner_amd.rpm'
         state: present
-        update_cache: true
-      register: installed_gitlab
-      until: installed_gitlab is succeeded
-      notify: kick gitlab-runner
 
     - name: Install EPEL repo.
       yum:
