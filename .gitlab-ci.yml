@@ -24,9 +24,9 @@ Lint:
   after_script:
     - rm -rf ~/ansible-lint-rules
   tags:
-    - aws
+    - lint
 
-Docker gitlab-runner:
+.Docker gitlab-runner:
   stage: deployment test
   script:
     - molecule test -s default

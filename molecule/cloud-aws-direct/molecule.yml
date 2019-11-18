@@ -26,6 +26,22 @@ platforms:
       - rhel_family
       - pip2
 
+  - name: test-aws-centos8-gitlab-runner
+    image: ami-0ed2ad9dc845b42b6
+    platform: centos8
+    instance_type: m5.large
+    region: us-east-1
+    vpc_subnet_id: subnet-0f2b9cd66faea38af
+    assign_public_ip: false
+    spot_price: 0.04
+    security_group_name:
+      - default
+    wait_timeout: 1800
+    ssh_user: centos
+    groups:
+      - rhel_family
+      - pip3
+
   - name: test-aws-ubuntu16-gitlab-runner
     image: ami-09677e0a6b14905b0
     platform: ubuntu16
@@ -57,6 +73,38 @@ platforms:
     groups:
       - debian_family
       - pip3
+
+  - name: test-aws-Debian9-gitlab-runner
+    image: ami-003f19e0e687de1cd
+    platform: debian9
+    instance_type: m5.large
+    region: us-east-1
+    vpc_subnet_id: subnet-0f2b9cd66faea38af
+    assign_public_ip: false
+    spot_price: 0.04
+    security_group_name:
+      - default
+    wait_timeout: 1800
+    ssh_user: admin
+    groups:
+      - debian_family
+      - pip3
+
+  - name: test-aws-Amazon2-heartbeat
+    image: ami-0b898040803850657
+    platform: amazon2
+    instance_type: m5.large
+    region: us-east-1
+    vpc_subnet_id: subnet-0f2b9cd66faea38af
+    assign_public_ip: false
+    spot_price: 0.04
+    security_group_name:
+      - default
+    wait_timeout: 1800
+    ssh_user: ec2-user
+    groups:
+      - rhel_family
+      - pip2
 
 provisioner:
   name: ansible

@@ -1,6 +1,6 @@
 ---
-pip_executable: '{{ gitlab_runner_default_pip_executable_for_redhat }}'
-python_executable: '{{ gitlab_runner_default_python_executable_for_redhat }}'
+gitlab_runner_default_pip_executable: pip
+gitlab_runner_default_python_executable: python
 
 gitlab_runner_packages_base:
   - yum-utils

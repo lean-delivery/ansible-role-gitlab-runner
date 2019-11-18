@@ -59,7 +59,7 @@ Requirements
   Limit number of concurrent requests for new jobs from GitLab. Default value is `1`
   - `gitlab_runner_env_vars`  
   Append or overwrite environment variables. Default value is `["ENV=value", "LC_ALL=en_US.UTF-8"]`
-  - `packages_additional`  
+  - `gitlab_runner_packages_additional`  
   Install additional packages for all installs. Default value is `[]`
   - `gitlab_runner_gpg`  
   GPG key for Debian. Default value is `https://packages.gitlab.com/gpg.key`

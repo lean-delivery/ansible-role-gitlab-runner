@@ -18,10 +18,8 @@ gitlab_runner_limit: 1
 gitlab_runner_concurrent: '{{ ansible_processor_vcpus }}'
 gitlab_runner_request_concurrency: 1
 gitlab_runner_skip_registration: false
-gitlab_runner_default_python_executable_for_debian: 'python3'
-gitlab_runner_default_pip_executable_for_debian: 'pip3'
-gitlab_runner_default_python_executable_for_redhat: 'python'
-gitlab_runner_default_pip_executable_for_redhat: 'pip'
+pip_executable: '{{ gitlab_runner_default_pip_executable }}'
+python_executable: '{{ gitlab_runner_default_python_executable }}'
 
 # https://gitlab.com/gitlab-org/gitlab-runner/issues/259
 gitlab_runner_env_vars:
@@ -39,7 +37,7 @@ gitlab_runners_section:
   executor: '{{ gitlab_runner_executor }}'
   environment: '{{ gitlab_runner_env_vars }}'
 
-packages_additional: []
+gitlab_runner_packages_additional: []
 
 gitlab_runner_gpg: >-
     https://packages.gitlab.com/gpg.key
