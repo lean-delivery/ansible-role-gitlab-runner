@@ -8,7 +8,7 @@ packages_base:
   - apt-transport-https
   - debian-archive-keyring
   - ca-certificates
-  - '{{ python_executable | default(python3) }}-pip'
+  - '{{ python_executable | default("python3") }}-pip'
 
 
 gitlab_runner_install_package: "{{ gitlab_runner_package }}\
