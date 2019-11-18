@@ -4,6 +4,5 @@ gitlab_runner_default_python_executable: python
 
 gitlab_runner_packages_base:
   - yum-utils
-  - pygpgme
   - ca-certificates
   - '{{ python_executable | default("python") }}-pip'

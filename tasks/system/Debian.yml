@@ -5,7 +5,7 @@
       apt_repository:
         repo: 'deb http://archive.ubuntu.com/ubuntu {{ ansible_distribution_release }} universe'
         state: present
-      when: ansible_distribution_release == 'bionic'
+      when: ansible_distribution == 'Ubuntu'
 
     - name: Install GitLab through deb package
       apt:
