@@ -3,7 +3,7 @@
 
 gitlab_version: 'latest'
 gitlab_runner_package: >-
-    {{ gitlab_version is version('10.0', '>=', strict=true) |
+    {{ gitlab_version is version('latest', '>=', strict=true) |
     ternary('gitlab-runner','gitlab-ci-multi-runner') }}
 gitlab_host: gitlab.com
 gitlab_url: 'https://{{ gitlab_host }}/'

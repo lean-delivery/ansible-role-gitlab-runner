@@ -1,25 +1,10 @@
 ---
 - name: Become section
   block:
-    - name: Add GitLab Runner GPG key
-      apt_key:
-        url: '{{ gitlab_runner_gpg }}'
-      register: apt_key_result
-      until: apt_key_result is succeeded
-
-    - name: Add GitLab Runner repository
-      apt_repository:
-        repo: '{{ gitlab_runner_repo }}'
-        validate_certs: true
-
-    - name: Install GitLab agent {{ gitlab_runner_install_package }}
+    - name: Install GitLab through deb package
       apt:
-        name: '{{ gitlab_runner_install_package }}'
-        state: present
-        update_cache: true
-      register: installed_gitlab
-      until: installed_gitlab is succeeded
-      notify: kick gitlab-runner
+        deb: 'https://gitlab-runner-downloads.s3.amazonaws.com/latest/deb/gitlab-runner_amd64.deb'
+
   become: true
   tags:
     - always
