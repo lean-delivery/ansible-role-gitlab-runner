@@ -27,7 +27,7 @@
         metadata_expire: '300'
         description: GitLab Runner Stable
 
-    - name: Install GitLab agent {{ gitlab_runner_install_package }}
+    - name: Install GitLab runner {{ gitlab_runner_install_package }}
       yum:
         name: '{{ gitlab_runner_install_package }}'
         state: present
