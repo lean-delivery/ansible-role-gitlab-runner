@@ -36,13 +36,6 @@
       until: installed_gitlab is succeeded
       notify: kick gitlab-runner
 
-    #- name: Install GitLab runner
-    #  yum:
-    #    name: '{{ gitlab_runner_rhel_repo }}'
-    #    state: present
-    #  register: install_gitlab_runner
-    #  until: install_gitlab_runner is succeeded
-
   become: true
   tags:
     - always

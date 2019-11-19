@@ -10,8 +10,6 @@ gitlab_version: '10.5'
 gitlab_runner_package: >-
     {{ gitlab_version is version('10.0', '>=', strict=true) |
     ternary('gitlab-runner','gitlab-ci-multi-runner') }}
-gitlab_runner_deb_repo: https://gitlab-runner-downloads.s3.amazonaws.com/latest/deb/gitlab-runner_amd64.deb
-gitlab_runner_rhel_repo: https://gitlab-runner-downloads.s3.amazonaws.com/latest/rpm/gitlab-runner_amd64.rpm
 gitlab_host: gitlab.com
 gitlab_url: 'https://{{ gitlab_host }}/'
 gitlab_ci_token: ''

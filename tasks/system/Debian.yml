@@ -17,12 +17,7 @@
       apt_repository:
         repo: '{{ gitlab_runner_repo }}'
         validate_certs: true
-
-    #- name: Install GitLab through deb package
-    #  apt:
-    #    deb: '{{ gitlab_runner_deb_repo }}'
-    #  register: install_gitlab_runner
-    #  until: install_gitlab_runner is succeeded
+        
     - name: Install GitLab agent {{ gitlab_runner_install_package }}
       apt:
         name: '{{ gitlab_runner_install_package }}'
