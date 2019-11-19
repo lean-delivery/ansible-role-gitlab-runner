@@ -17,7 +17,7 @@
       apt_repository:
         repo: '{{ gitlab_runner_repo }}'
         validate_certs: true
-        
+
     - name: Install GitLab agent {{ gitlab_runner_install_package }}
       apt:
         name: '{{ gitlab_runner_install_package }}'
