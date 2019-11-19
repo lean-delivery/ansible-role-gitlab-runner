@@ -12,7 +12,7 @@
         url: '{{ gitlab_runner_gpg }}'
       register: apt_key_result
       until: apt_key_result is succeeded
-      
+
     - name: Add GitLab Runner repository
       apt_repository:
         repo: '{{ gitlab_runner_repo }}'
