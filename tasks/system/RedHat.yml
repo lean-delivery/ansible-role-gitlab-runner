@@ -15,12 +15,34 @@
       register: install_epel_key
       until: install_epel_key is succeeded
 
-    - name: Install GitLab runner
+    - name: Add GitLab Runner repository
+      yum_repository:
+        name: runner_{{ gitlab_runner_package }}
+        baseurl: '{{ gitlab_runner_repo }}'
+        gpgcheck: false
+        repo_gpgcheck: false
+        gpgkey: '{{ gitlab_runner_gpg }}'
+        sslverify: true
+        sslcacert: /etc/pki/tls/certs/ca-bundle.crt
+        metadata_expire: '300'
+        description: GitLab Runner Stable
+
+    - name: Install GitLab agent {{ gitlab_runner_install_package }}
       yum:
-        name: '{{ gitlab_runner_rhel_repo }}'
+        name: '{{ gitlab_runner_install_package }}'
         state: present
-      register: install_gitlab_runner
-      until: install_gitlab_runner is succeeded
+        update_cache: true
+      register: installed_gitlab
+      until: installed_gitlab is succeeded
+      notify: kick gitlab-runner
+
+    #- name: Install GitLab runner
+    #  yum:
+    #    name: '{{ gitlab_runner_rhel_repo }}'
+    #    state: present
+    #  register: install_gitlab_runner
+    #  until: install_gitlab_runner is succeeded
+
   become: true
   tags:
     - always
