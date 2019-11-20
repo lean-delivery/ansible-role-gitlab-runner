@@ -1,15 +1,20 @@
 ---
 - name: Converge
   hosts: all
+  pre_tasks:
+    - name: debug gitlab_registration_token
+      debug:
+        msg: >-
+          {{ lookup('env', 'gitlab_registration_token') }}
   roles:
     - role: ansible-role-gitlab-runner
       vars:
         gitlab_runner_concurrent: 4
         gitlab_runner_skip_registration: false
         gitlab_api_token: >-
-          {{ lookup(env, 'gitlab_api_token') }}
+          {{ lookup('env', 'gitlab_api_token') }}
         gitlab_ci_token: >-
-          {{ lookup(env, 'gitlab_registration_token') }}
+          {{ lookup('env', 'gitlab_registration_token') }}
         gitlab_runner_description: 'test molecule runner'
         gitlab_runner_tags:
           - molecule_test
