@@ -6,7 +6,7 @@
 
 - name: Register gitlab-runner
   gitlab_runner:
-    url: '{{ gitlab_url }}'
+    api_url: '{{ gitlab_url }}'
     api_token: '{{ gitlab_api_token }}'
     registration_token: '{{ gitlab_ci_token }}'
     description: '{{ gitlab_runner_description }}'
@@ -23,6 +23,28 @@
     - always
 
 - name: debug gitlab_runner_token
+  debug:
+    var: gitlab_runner_token
+
+- name: Register gitlab-runner2
+  gitlab_runner:
+    api_url: '{{ gitlab_url }}'
+    api_token: '{{ gitlab_api_token }}'
+    registration_token: '{{ gitlab_ci_token }}'
+    description: '{{ gitlab_runner_description }}'
+    tag_list: '{{ gitlab_runner_tags }}'
+    run_untagged: '{{ gitlab_runner_untagged_builds_run }}'
+    state: present
+  become: true
+  register: gitlab_runner_token
+  when:
+    - not gitlab_runner_skip_registration|bool
+    - gitlab_ci_token | length
+  # no_log: "{{ no_logs | default(true) | bool }}"
+  tags:
+    - always
+
+- name: debug gitlab_runner_token2
   debug:
     var: gitlab_runner_token
 
