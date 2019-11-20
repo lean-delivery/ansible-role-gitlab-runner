@@ -1,11 +1,6 @@
 ---
 - name: Converge
   hosts: all
-  pre_tasks:
-    - name: debug gitlab_registration_token
-      debug:
-        msg: >-
-          {{ lookup('env', 'gitlab_registration_token') }}
   roles:
     - role: ansible-role-gitlab-runner
       vars:

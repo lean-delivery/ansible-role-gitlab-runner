@@ -18,9 +18,13 @@
   when:
     - not gitlab_runner_skip_registration|bool
     - gitlab_ci_token | length
-  no_log: "{{ no_logs | default(true) | bool }}"
+  # no_log: "{{ no_logs | default(true) | bool }}"
   tags:
     - always
+
+- name: debug gitlab_runner_token
+  debug:
+    var: gitlab_runner_token
 
 - name: Create config.toml file using jinja2
   template:
