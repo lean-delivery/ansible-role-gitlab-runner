@@ -1,6 +1,14 @@
 ---
 - name: Verify
   hosts: all
+  vars:
+    gitlab_url: https://gitlab.com
+    gitlab_project_id: 15447129
+    gitlab_api_token: >-
+      {{ lookup('env', 'gitlab_api_token') }}
+    gitlab_ci_token: >-
+      {{ lookup('env', 'gitlab_registration_token') }}
+    gitlab_runner_description: '{{ inventory_hostname }}'
   tasks:
     - name: Populate service facts
       service_facts:
@@ -11,3 +19,33 @@
                 "'running' in ansible_facts.services['gitlab-runner.service'].state"
                 or
                 "'running' in ansible_facts.services['gitlab-runner'].state"
+
+    - name: Run pipeline gitlab-runner
+      uri:
+        url: '{{ gitlab_url }}/api/v4/projects/{{ gitlab_project_id }}/trigger/pipeline'
+        method: POST
+        body:
+          token: '{{ gitlab_api_token }}'
+          ref: 'master'
+        body_format: json
+        status_code: 201
+      register: pipeline_triggered
+
+    - name: Check var
+      debug:
+        var: pipeline_triggered
+
+    - name: Get status of pipeline
+      uri:
+        url: '{{ gitlab_url }}/api/v4/projects/{{ gitlab_project_id }}/pipelines/{{ pipeline_triggered.json.id }}'
+        headers:
+          PRIVATE-TOKEN: '{{ gitlab_api_token }}'
+        method: GET
+      register: status_of_pipeline
+      until: '"success" in status_of_pipeline.json.status'
+      retries: 5
+      delay: 5
+
+    - name: Check status_of_pipeline
+      debug:
+        var: status_of_pipeline

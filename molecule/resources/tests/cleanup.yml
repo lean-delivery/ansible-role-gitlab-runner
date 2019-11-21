@@ -9,14 +9,7 @@
           PRIVATE-TOKEN: >-
             {{ lookup('env', 'gitlab_api_token') }}
         method: GET
-      register: runners
-      # until: '"success" in status_of_pipeline.json.status'
-      # retries: 5
-      # delay: 5
-
-    - name: debug runners
-      debug:
-        var: runners
+      register: gitlab_runners
 
     - name: Remove gitlab-runner
       gitlab_runner:
@@ -27,5 +20,4 @@
           {{ lookup('env', 'gitlab_registration_token') }}
         description: '{{ item.description }}'
         state: absent
-      become: true
-      loop: '{{ runners.json }}'
+      loop: '{{ gitlab_runners.json }}'
