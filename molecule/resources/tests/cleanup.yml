@@ -2,16 +2,32 @@
 - name: Cleanup
   hosts: all
   tasks:
-    - name: Remove gitlab-runner
-      gitlab_runner:
-        api_url: '{{ gitlab_url }}'
-        api_token: >-
-          {{ lookup('env', 'gitlab_api_token') }}
-        description: '{{ inventory_hostname }}'
-        state: absent
-      become: true
-      register: gitlab_runner
+    - name: Get status of pipeline
+      uri:
+        url: https://gitlab.com/api/v4/runners/all
+        headers:
+          PRIVATE-TOKEN: >-
+            {{ lookup('env', 'gitlab_api_token') }}
+        method: GET
+      register: runners
+      # until: '"success" in status_of_pipeline.json.status'
+      # retries: 5
+      # delay: 5
 
-    - name: debug gitlab_runner
+    - name: debug runners
       debug:
-        var: gitlab_runner
+        var: runners
+
+    # - name: Remove gitlab-runner
+    #   gitlab_runner:
+    #     api_url: '{{ gitlab_url }}'
+    #     api_token: >-
+    #       {{ lookup('env', 'gitlab_api_token') }}
+    #     description: '{{ inventory_hostname }}'
+    #     state: absent
+    #   become: true
+    #   register: gitlab_runner
+
+    # - name: debug gitlab_runner
+    #   debug:
+    #     var: gitlab_runner
