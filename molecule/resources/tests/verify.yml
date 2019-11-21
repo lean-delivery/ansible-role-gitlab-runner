@@ -51,10 +51,6 @@
                 {{ lookup('env', 'CI_COMMIT_SHORT_SHA') }}
       register: git_commit
 
-    - name: Check git_commit
-      debug:
-        var: git_commit
-
     - name: Get commit info
       uri:
         url: '{{ gitlab_url }}/api/v4/projects/{{ gitlab_project_id }}/repository/commits/master'
@@ -62,10 +58,6 @@
         headers:
           PRIVATE-TOKEN: '{{ gitlab_api_token }}'
       register: git_commit_stat
-
-    # - name: Check git_commit_stat
-    #   debug:
-    #     var: git_commit_stat
 
     - name: Get pipeline status
       uri:
@@ -77,7 +69,3 @@
       until: '"success" in last_pipeline.json.status'
       retries: 5
       delay: 5
-
-    - name: Check var
-      debug:
-        var: last_pipeline
