@@ -35,7 +35,7 @@ platforms:
 
 provisioner:
   name: ansible
-  # log: true
+  log: false
   lint:
     name: ansible-lint
   config_options:

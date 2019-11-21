@@ -31,5 +31,7 @@ galaxy_info:
     - 'gitlabrunner'
     - 'gitlab'
     - 'ci'
+    - 'agent'
+    - 'git'
 
 dependencies: []

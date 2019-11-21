@@ -28,17 +28,28 @@ Requirements
 
 - required
   - `gitlab_version`  
-  Specific version of Gitlab-Runner. Default value is `10.5`.
+  Specific version of Gitlab-Runner. Default value is `latest`.
+  - `gitlab_api_token`  
+  A token you need to access Gitlab API. Default value is `''`.
   - `gitlab_ci_token`  
-  A Token you obtained to register the Runner. Default value is ``.
+  A Token you obtained to register the Runner. Default value is `''`.
+  - `gitlab_runner_description`  
+  The unique name of the runner. Default value:   
+```
+    {{ ansible_fqdn }}
+    {{ ansible_distribution }}
+    {{ ansible_distribution_major_version }}
+```
 
 - defaults
   - `no_logs`  
   Hide sensitive information from logs. Default value is `true`
   - `gitlab_runner_skip_registration`  
   Skip gitlab-runner registration after installation. Default value is `false`
-  - `gitlab_host`  
-  Docker gitlab server. Default value is `git.epam.com`
+  - `gitlab_host`   
+  Docker gitlab server. Default value is `gitlab.com`
+  - `gitlab_url`   
+  Gitlab url address. Default value: `https://{{ gitlab_host }}/`
   - `gitlab_runner_tags`  
   The tags associated with the Runner. Should be comma delimited. Default value is `delegated`
   - `gitlab_runner_untagged_builds_run`  
@@ -59,10 +70,31 @@ Requirements
   Limit number of concurrent requests for new jobs from GitLab. Default value is `1`
   - `gitlab_runner_env_vars`  
   Append or overwrite environment variables. Default value is `["ENV=value", "LC_ALL=en_US.UTF-8"]`
+  - `gitlab_runner_package`
+  Gitlab-runner package name. Default: `gitlab-runner`
   - `gitlab_runner_packages_additional`  
   Install additional packages for all installs. Default value is `[]`
   - `gitlab_runner_gpg`  
   GPG key for Debian. Default value is `https://packages.gitlab.com/gpg.key`
+  - `gitlab_global_section`   
+  Global section of gitclab config. Default is dictionary:
+  ```yaml
+    concurrent: '{{ gitlab_runner_request_concurrency }}'
+    check_interval: 0
+  ```
+
+  - `gitlab_session_server_section`   
+  Server section of gitlab config. Default is dictionary:
+    `session_timeout: 1800`
+  - `gitlab_runners_section`   
+  Runners section of gitlab config. Default is dictionary:
+  ```yaml
+    name: '{{ gitlab_runner_description }}'
+    url: '{{ gitlab_url }}'
+    token: '{{ gitlab_runner.runner.token | default(omit) }}'
+    executor: '{{ gitlab_runner_executor }}'
+    environment: '{{ gitlab_runner_env_vars }}'
+  ```
 
 - advanced configuration
   - `gitlab_runner_config`  
@@ -73,6 +105,30 @@ Requirements
     Dictionary with *key:value* used to add/change ***non string values*** in the file "config.toml"
     - `global_strings`  
     Dictionary with *key:value* used to add/change ***string values*** in the file "config.toml"
+
+- additional variables
+  - `yum_libselinux_python_library`  
+  Selinux python library name. Default value: `libselinux-python`
+  For RedHat 8 or Fedora library name may be different, e.g. `python3-libselinux`.  
+  - `yum_libselinux_config_libraries`  
+  Selinux config libraries. Default value is list: `[policycoreutils-python, libsemanage-python]`. 
+  For RedHat 8 or Fedora value may be different:
+    - python3-policycoreutils
+    - python3-libsemanage
+  - `epel_repository_url`  
+  URL of EPEL repo package. Default: `https://dl.fedoraproject.org/pub/epel/epel-release-latest-{{ ansible_distribution_major_version }}.noarch.rpm`  
+  - `epel_rpm_key`  
+  EPEL rpm key. Default value: `/etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }}`  
+  - `gitlab_runner_python_module_version`  
+  Version of python-gitlab library. Default: `'1.12.1'`
+  - `pip_executable`  
+  Name of pip executable binary. Default:
+    - `pip` for RedHat based targets
+    - `pip3` for Debian based targets
+  - `python_executable`   
+  Name of python executable. Default:
+    - `python` for RedHat based targets
+    - `python3` for Debian based targets
 
 ## Some examples of the installing current role
 
@@ -106,7 +162,7 @@ Example Playbook
     - role: ansible-role-gitlab-runner
       vars:
         gitlab_runner_concurrent: 1
-        gitlab_version: "10.5"
+        gitlab_version: "12.5.1"
         gitlab_runner_skip_registration: true
 ```
 
