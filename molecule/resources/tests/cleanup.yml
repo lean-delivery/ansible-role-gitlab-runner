@@ -23,6 +23,8 @@
         api_url: https://gitlab.com
         api_token: >-
           {{ lookup('env', 'gitlab_api_token') }}
+        registration_token: >-
+          {{ lookup('env', 'gitlab_registration_token') }}
         description: '{{ item.description }}'
         state: absent
       become: true
