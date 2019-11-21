@@ -1,5 +1,5 @@
 ---
-- name: Verify
+- name: Verify runners
   hosts: all
   vars:
     gitlab_url: https://gitlab.com
@@ -20,6 +20,18 @@
                 or
                 "'running' in ansible_facts.services['gitlab-runner'].state"
 
+- name: Verify pipelines
+  hosts: localhost
+  gather_facts: false
+  vars:
+    gitlab_url: https://gitlab.com
+    gitlab_project_id: 15447129
+    gitlab_api_token: >-
+      {{ lookup('env', 'gitlab_api_token') }}
+    gitlab_ci_token: >-
+      {{ lookup('env', 'gitlab_registration_token') }}
+    gitlab_runner_description: '{{ inventory_hostname }}'
+  tasks:
     - name: Commit to repo
       uri:
         url: '{{ gitlab_url }}/api/v4/projects/{{ gitlab_project_id }}/repository/commits'
