@@ -13,5 +13,5 @@
         gitlab_runner_description: '{{ inventory_hostname }}'
         gitlab_runner_tags:
           - molecule_test
-          - '{{ ansible_distribution }}'
+          - '{{ ansible_distribution | lower }}'
         gitlab_runner_untagged_builds_run: false
