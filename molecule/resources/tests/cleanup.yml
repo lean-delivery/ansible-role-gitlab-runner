@@ -1,0 +1,17 @@
+---
+- name: Cleanup
+  hosts: all
+  tasks:
+    - name: Remove gitlab-runner
+      gitlab_runner:
+        api_url: '{{ gitlab_url }}'
+        api_token: >-
+          {{ lookup('env', 'gitlab_api_token') }}
+        description: '{{ inventory_hostname }}'
+        state: absent
+      become: true
+      register: gitlab_runner
+
+    - name: debug gitlab_runner
+      debug:
+        var: gitlab_runner
