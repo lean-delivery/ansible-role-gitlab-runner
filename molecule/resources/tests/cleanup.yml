@@ -1,6 +1,6 @@
 ---
 - name: Cleanup
-  hosts: all
+  hosts: localhost
   tasks:
     - name: Get status of pipeline
       uri:
