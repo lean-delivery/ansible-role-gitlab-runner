@@ -10,7 +10,7 @@
           {{ lookup('env', 'gitlab_api_token') }}
         gitlab_ci_token: >-
           {{ lookup('env', 'gitlab_registration_token') }}
-        gitlab_runner_description: 'test molecule runner'
+        gitlab_runner_description: '{{ inventory_hostname }}'
         gitlab_runner_tags:
           - molecule_test
           - '{{ ansible_distribution }}'
