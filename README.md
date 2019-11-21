@@ -17,12 +17,16 @@ This Ansible role has the following features:
 Requirements
 ------------
 
- - Version of the ansible for installation: 2.5
+ - Version of the ansible for installation: 2.8
  - **Supported OS**:
-   - EL
-     - 7
+   - EL (RedHat, CentOS)
+     - 7, 8
+   - Amazon2 Linux
    - Ubuntu
+     - 16.04
      - 18.04
+   - Debian
+     - 8, 9
 
 ## Role Variables
 
@@ -143,33 +147,45 @@ ansible-galaxy install lean_delivery.gitlab-runner
 Example Playbook
 ----------------
 
-### Installing gitlab-runner to centos 7:
+### Installing gitlab-runner without registration:
 ```yaml
 - name: Converge
-  hosts: rhel_family
+  hosts: gitlab_runner
   roles:
-    - role: ansible-role-gitlab-runner
-      vars:
-        gitlab_runner_concurrent: 1
-        gitlab_runner_skip_registration: true
+    - role: lean_delivery.gitlab_runner
+  vars:
+    gitlab_runner_concurrent: 1
+    gitlab_runner_skip_registration: true
 ```
 
-### Installing gitlab-runner to ubuntu 18.04:
+### Installing gitlab-runner with registration and config:
 ```yaml
 - name: Converge
-  hosts: debian_family
+  hosts: gitlab_runner
   roles:
-    - role: ansible-role-gitlab-runner
-      vars:
-        gitlab_runner_concurrent: 1
-        gitlab_version: "12.5.1"
-        gitlab_runner_skip_registration: true
+    - role: lean_delivery.gitlab_runner
+      gitlab_runner_concurrent: 4
+      gitlab_runner_skip_registration: false
+      gitlab_api_token: >-
+        {{ lookup('env', 'GITLAB_API_TOKEN') }}
+      gitlab_ci_token: >-
+        {{ lookup('env', 'GITLAB_REGISTRATION_TOKEN') }}
+      gitlab_runner_description: 'My Great Runner'
+      gitlab_runner_tags:
+        - deploy_test
+        - shell
+      gitlab_runner_untagged_builds_run: false
+      gitlab_runner_concurrent: 1
+      gitlab_version: '12.5.1'
+      gitlab_runner_skip_registration: false
 ```
 
 License
 -------
 
 Apache
+
+[![License](https://img.shields.io/badge/license-Apache-green.svg?style=flat)](https://raw.githubusercontent.com/lean-delivery/ansible-role-gitlab-runner/master/LICENSE)
 
 Author Information
 ------------------
