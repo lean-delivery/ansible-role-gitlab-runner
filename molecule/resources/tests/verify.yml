@@ -1,6 +1,14 @@
 ---
-- name: Verify
+- name: Verify runners
   hosts: all
+  vars:
+    gitlab_url: https://gitlab.com
+    gitlab_project_id: 15447129
+    gitlab_api_token: >-
+      {{ lookup('env', 'gitlab_api_token') }}
+    gitlab_ci_token: >-
+      {{ lookup('env', 'gitlab_registration_token') }}
+    gitlab_runner_description: '{{ inventory_hostname }}'
   tasks:
     - name: Populate service facts
       service_facts:

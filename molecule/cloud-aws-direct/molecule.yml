@@ -13,7 +13,7 @@ platforms:
   - name: test-aws-centos7-gitlab-runner
     image: ami-9887c6e7
     platform: centos7
-    instance_type: m5.large
+    instance_type: t3.small
     region: us-east-1
     vpc_subnet_id: subnet-0f2b9cd66faea38af
     assign_public_ip: false
@@ -24,11 +24,28 @@ platforms:
     ssh_user: centos
     groups:
       - rhel_family
+      - pip2
+
+  - name: test-aws-centos8-gitlab-runner
+    image: ami-0ed2ad9dc845b42b6
+    platform: centos8
+    instance_type: t3.small
+    region: us-east-1
+    vpc_subnet_id: subnet-0f2b9cd66faea38af
+    assign_public_ip: false
+    spot_price: 0.04
+    security_group_name:
+      - default
+    wait_timeout: 1800
+    ssh_user: centos
+    groups:
+      - rhel_family
+      - pip3
 
   - name: test-aws-ubuntu16-gitlab-runner
     image: ami-09677e0a6b14905b0
     platform: ubuntu16
-    instance_type: m5.large
+    instance_type: t3.small
     region: us-east-1
     vpc_subnet_id: subnet-0f2b9cd66faea38af
     assign_public_ip: false
@@ -39,11 +56,12 @@ platforms:
     ssh_user: ubuntu
     groups:
       - debian_family
+      - pip3
 
   - name: test-aws-ubuntu18-gitlab-runner
     image: ami-012fd5eb46f56731f
     platform: ubuntu18
-    instance_type: m5.large
+    instance_type: t3.small
     region: us-east-1
     vpc_subnet_id: subnet-0f2b9cd66faea38af
     assign_public_ip: false
@@ -54,18 +72,72 @@ platforms:
     ssh_user: ubuntu
     groups:
       - debian_family
+      - pip3
+
+  - name: test-aws-Debian9-gitlab-runner
+    image: ami-003f19e0e687de1cd
+    platform: debian9
+    instance_type: t3.small
+    region: us-east-1
+    vpc_subnet_id: subnet-0f2b9cd66faea38af
+    assign_public_ip: false
+    spot_price: 0.04
+    security_group_name:
+      - default
+    wait_timeout: 1800
+    ssh_user: admin
+    groups:
+      - debian_family
+      - pip3
+
+  - name: test-aws-Amazon2-gitlab-runner
+    image: ami-0b898040803850657
+    platform: amazon2
+    instance_type: t3.small
+    region: us-east-1
+    vpc_subnet_id: subnet-0f2b9cd66faea38af
+    assign_public_ip: false
+    spot_price: 0.04
+    security_group_name:
+      - default
+    wait_timeout: 1800
+    ssh_user: ec2-user
+    groups:
+      - rhel_family
+      - pip2
+      - amazon
 
 provisioner:
   name: ansible
   log: false
   config_options:
     defaults:
+      forks: 10
       callback_whitelist: profile_tasks,timer
+  inventory:
+    group_vars:
+      amazon:
+        epel_repository_url: 'https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm'
+        epel_rpm_key: '/etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7'
+      pip2:
+        gitlab_runner_packages_additional:
+          - pygpgme
+        pip_executable: pip
+        python_executable: python
+      pip3:
+        yum_libselinux_python_library: python3-libselinux
+        yum_libselinux_config_libraries:
+          - python3-policycoreutils
+          - python3-libsemanage
+        pip_executable: pip3
+        python_executable: python3
+        ansible_python_interpreter: /usr/bin/python3
   playbooks:
     create: ../resources/provisioning/AWS/create.yml
     prepare: ../resources/provisioning/AWS/prepare.yml
     destroy: ../resources/provisioning/AWS/destroy.yml
-    verify: ../resources/tests/verify.yml
+    verify: verify.yml
+    cleanup: cleanup.yml
   lint:
     name: ansible-lint
 scenario:

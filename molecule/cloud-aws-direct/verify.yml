@@ -1,0 +1,72 @@
+---
+- name: Verify runners
+  hosts: all
+  vars:
+    gitlab_url: https://gitlab.com
+    gitlab_project_id: 15447129
+    gitlab_api_token: >-
+      {{ lookup('env', 'gitlab_api_token') }}
+    gitlab_ci_token: >-
+      {{ lookup('env', 'gitlab_registration_token') }}
+    gitlab_runner_description: '{{ inventory_hostname }}'
+  tasks:
+    - name: Populate service facts
+      service_facts:
+
+    - name: Assert that gitlab-runner service is running
+      assert:
+        that: |
+                "'running' in ansible_facts.services['gitlab-runner.service'].state"
+                or
+                "'running' in ansible_facts.services['gitlab-runner'].state"
+
+- name: Verify pipelines
+  hosts: localhost
+  gather_facts: false
+  vars:
+    gitlab_url: https://gitlab.com
+    gitlab_project_id: 15447129
+    gitlab_api_token: >-
+      {{ lookup('env', 'gitlab_api_token') }}
+    gitlab_ci_token: >-
+      {{ lookup('env', 'gitlab_registration_token') }}
+    gitlab_runner_description: '{{ inventory_hostname }}'
+  tasks:
+    - name: Commit to repo
+      uri:
+        url: '{{ gitlab_url }}/api/v4/projects/{{ gitlab_project_id }}/repository/commits'
+        method: POST
+        headers:
+          PRIVATE-TOKEN: '{{ gitlab_api_token }}'
+        body_format: json
+        status_code: 201
+        body:
+          branch: master
+          commit_message: >-
+            Test {{ lookup('env', 'CI_JOB_ID') }}
+          actions:
+            - action: update
+              file_path: README.md
+              content: >-
+                {{ lookup('env', 'CI_COMMIT_SHORT_SHA') }}
+      register: git_commit
+
+    - name: Get commit info
+      uri:
+        url: '{{ gitlab_url }}/api/v4/projects/{{ gitlab_project_id }}/repository/commits/master'
+        method: GET
+        headers:
+          PRIVATE-TOKEN: '{{ gitlab_api_token }}'
+      register: git_commit_stat
+      until: git_commit_stat.json.last_pipeline.id is defined
+
+    - name: Get pipeline status
+      uri:
+        url: '{{ gitlab_url }}/api/v4/projects/{{ gitlab_project_id }}/pipelines/{{ git_commit_stat.json.last_pipeline.id }}'
+        method: GET
+        headers:
+          PRIVATE-TOKEN: '{{ gitlab_api_token }}'
+      register: last_pipeline
+      until: '"success" in last_pipeline.json.status'
+      retries: 5
+      delay: 5

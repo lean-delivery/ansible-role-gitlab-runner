@@ -1,19 +1,18 @@
 ---
-- name: Add universe repository for Ubuntu
-  apt_repository:
-    repo: "deb http://archive.ubuntu.com/ubuntu {{ ansible_distribution_release }} universe"
-    state: present
-  when: ansible_distribution == 'Ubuntu'
-  become: true
-  tags:
-    - always
-
 - name: Install required packages
   package:
-    name: '{{ packages_base | union(packages_additional) | unique }}'
+    name: >-
+      {{ gitlab_runner_packages_base | union(gitlab_runner_packages_additional) | unique }}
     state: present
   register: installed_packages
   until: installed_packages is succeeded
   become: true
-  tags:
-    - always
+
+- name: Install Python gitlab module
+  pip:
+    name: 'python-gitlab=={{ gitlab_runner_python_module_version }}'
+    state: present
+    executable: '{{ pip_executable | default("pip") }}'
+  register: pip_result
+  until: pip_result is succeeded
+  become: true

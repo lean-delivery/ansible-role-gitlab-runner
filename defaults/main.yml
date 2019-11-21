@@ -1,48 +1,50 @@
 ---
 # defaults file for ansible-role-gitlab-runner
-
-gitlab_version: '10.5'
-gitlab_runner_package: >-
-    {{ gitlab_version is version('10.0', '>=', strict=true) |
-    ternary('gitlab-runner','gitlab-ci-multi-runner') }}
-gitlab_host: git.epam.com
-gitlab_url: 'https://{{ gitlab_host }}/ci'
+yum_libselinux_python_library: libselinux-python
+yum_libselinux_config_libraries:
+  - policycoreutils-python
+  - libsemanage-python
+epel_repository_url: 'https://dl.fedoraproject.org/pub/epel/epel-release-latest-{{ ansible_distribution_major_version }}.noarch.rpm'
+epel_rpm_key: '/etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }}'
+gitlab_version: latest
+gitlab_runner_package: gitlab-runner
+gitlab_host: gitlab.com
+gitlab_url: 'https://{{ gitlab_host }}/'
 gitlab_ci_token: ''
+gitlab_api_token: ''
 gitlab_runner_description: >-
     {{ ansible_fqdn }}
     {{ ansible_distribution }}
     {{ ansible_distribution_major_version }}
-gitlab_runner_tags: delegated
+gitlab_runner_tags: ['delegated']
+gitlab_runner_python_module_version: '1.12.1'
 gitlab_runner_untagged_builds_run: true
 gitlab_runner_lock_to_project: false
 gitlab_runner_executor: shell
 gitlab_runner_limit: 1
 gitlab_runner_concurrent: '{{ ansible_processor_vcpus }}'
 gitlab_runner_request_concurrency: 1
+gitlab_runner_skip_registration: false
+pip_executable: '{{ gitlab_runner_default_pip_executable }}'
+python_executable: '{{ gitlab_runner_default_python_executable }}'
 
 # https://gitlab.com/gitlab-org/gitlab-runner/issues/259
 gitlab_runner_env_vars:
-  - 'ENV=value'
   - 'LC_ALL=en_US.UTF-8'
 
-gitlab_runner_config:
-  params:
-    REGISTRATION_TOKEN: '{{ gitlab_ci_token }}'
-    RUNNER_NAME: '{{ gitlab_runner_description }}'
-    CI_SERVER_URL: '{{ gitlab_url }}'
-    RUNNER_EXECUTOR: '{{ gitlab_runner_executor }}'
-    REGISTER_RUN_UNTAGGED: '{{ gitlab_runner_untagged_builds_run }}'
-    REGISTER_LOCKED: '{{ gitlab_runner_lock_to_project }}'
-    RUNNER_TAG_LIST: '{{ gitlab_runner_tags }}'
-    RUNNER_LIMIT: '{{ gitlab_runner_limit }}'
-    RUNNER_REQUEST_CONCURRENCY: '{{ gitlab_runner_request_concurrency }}'
-    REGISTER_NON_INTERACTIVE: true
-  global_values:
-    concurrent: '{{ gitlab_runner_concurrent }}'
-  global_strings: {}
-gitlab_runner_skip_registration: false
+gitlab_global_section:
+  concurrent: '{{ gitlab_runner_request_concurrency }}'
+  check_interval: 0
+gitlab_session_server_section:
+  session_timeout: 1800
+gitlab_runners_section:
+  name: '{{ gitlab_runner_description }}'
+  url: '{{ gitlab_url }}'
+  token: '{{ gitlab_runner.runner.token | default(omit) }}'
+  executor: '{{ gitlab_runner_executor }}'
+  environment: '{{ gitlab_runner_env_vars }}'
 
-packages_additional: []
+gitlab_runner_packages_additional: []
 
 gitlab_runner_gpg: >-
     https://packages.gitlab.com/gpg.key

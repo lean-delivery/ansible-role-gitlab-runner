@@ -1,0 +1,23 @@
+---
+- name: Cleanup
+  hosts: localhost
+  tasks:
+    - name: Get list of registered runners
+      uri:
+        url: https://gitlab.com/api/v4/projects/15447129/runners?tag_list=molecule_test
+        headers:
+          PRIVATE-TOKEN: >-
+            {{ lookup('env', 'gitlab_api_token') }}
+        method: GET
+      register: gitlab_runners
+
+    - name: Remove gitlab-runners
+      gitlab_runner:
+        api_url: https://gitlab.com
+        api_token: >-
+          {{ lookup('env', 'gitlab_api_token') }}
+        registration_token: >-
+          {{ lookup('env', 'gitlab_registration_token') }}
+        description: '{{ item.description }}'
+        state: absent
+      loop: '{{ gitlab_runners.json }}'

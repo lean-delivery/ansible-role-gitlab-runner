@@ -10,6 +10,7 @@ before_script:
   - ansible-lint --version
   - molecule --version
   - git clone https://github.com/lean-delivery/ansible-molecule-drivers.git molecule/resources/provisioning
+  - pip3 install python-gitlab==1.12.1
 
 variables:
   GET_SOURCES_ATTEMPTS: "5"
@@ -24,7 +25,7 @@ Lint:
   after_script:
     - rm -rf ~/ansible-lint-rules
   tags:
-    - aws
+    - lint
 
 Docker gitlab-runner:
   stage: deployment test
