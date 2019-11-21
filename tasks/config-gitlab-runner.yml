@@ -48,6 +48,50 @@
   debug:
     var: gitlab_runner_token
 
+- name: Register gitlab-runner3
+  gitlab_runner:
+    api_url: '{{ gitlab_url }}'
+    api_token: '{{ gitlab_api_token }}'
+    registration_token: '{{ gitlab_ci_token }}'
+    description: '{{ gitlab_runner_description }}'
+    tag_list: '{{ gitlab_runner_tags }}'
+    run_untagged: '{{ gitlab_runner_untagged_builds_run }}'
+    state: present
+  become: true
+  register: gitlab_runner_token
+  when:
+    - not gitlab_runner_skip_registration|bool
+    - gitlab_ci_token | length
+  # no_log: "{{ no_logs | default(true) | bool }}"
+  tags:
+    - always
+
+- name: debug gitlab_runner_token3
+  debug:
+    var: gitlab_runner_token
+
+- name: Register gitlab-runner4
+  gitlab_runner:
+    api_url: '{{ gitlab_url }}'
+    api_token: '{{ gitlab_api_token }}'
+    registration_token: '{{ gitlab_ci_token }}'
+    description: '{{ gitlab_runner_description }}'
+    tag_list: '{{ gitlab_runner_tags }}'
+    run_untagged: '{{ gitlab_runner_untagged_builds_run }}'
+    state: present
+  become: true
+  register: gitlab_runner_token
+  when:
+    - not gitlab_runner_skip_registration|bool
+    - gitlab_ci_token | length
+  # no_log: "{{ no_logs | default(true) | bool }}"
+  tags:
+    - always
+
+- name: debug gitlab_runner_token4
+  debug:
+    var: gitlab_runner_token
+
 - name: Create config.toml file using jinja2
   template:
     src: config.toml.j2
