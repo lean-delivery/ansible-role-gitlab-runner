@@ -22,11 +22,10 @@
 
     - name: Run pipeline gitlab-runner
       uri:
-        url: '{{ gitlab_url }}/api/v4/projects/{{ gitlab_project_id }}/trigger/pipeline'
+        url: '{{ gitlab_url }}/api/v4/projects/{{ gitlab_project_id }}/pipelines/97554831/retry'
         method: POST
-        body:
-          token: '{{ gitlab_api_token }}'
-          ref: 'master'
+        headers:
+          PRIVATE-TOKEN: '{{ gitlab_api_token }}'
         body_format: json
         status_code: 201
       register: pipeline_triggered
