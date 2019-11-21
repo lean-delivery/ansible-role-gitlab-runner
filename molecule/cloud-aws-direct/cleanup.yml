@@ -2,7 +2,7 @@
 - name: Cleanup
   hosts: localhost
   tasks:
-    - name: Get status of pipeline
+    - name: Get list of registered runners
       uri:
         url: https://gitlab.com/api/v4/projects/15447129/runners?tag_list=molecule_test
         headers:
@@ -11,7 +11,7 @@
         method: GET
       register: gitlab_runners
 
-    - name: Remove gitlab-runner
+    - name: Remove gitlab-runners
       gitlab_runner:
         api_url: https://gitlab.com
         api_token: >-
