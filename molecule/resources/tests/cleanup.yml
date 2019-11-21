@@ -4,7 +4,7 @@
   tasks:
     - name: Get status of pipeline
       uri:
-        url: https://gitlab.com/api/v4/projects/15447129/runners
+        url: https://gitlab.com/api/v4/projects/15447129/runners?tag_list=molecule_test
         headers:
           PRIVATE-TOKEN: >-
             {{ lookup('env', 'gitlab_api_token') }}
