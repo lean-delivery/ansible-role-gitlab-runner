@@ -58,6 +58,7 @@
         headers:
           PRIVATE-TOKEN: '{{ gitlab_api_token }}'
       register: git_commit_stat
+      until: git_commit_stat.json.last_pipeline.id is defined
 
     - name: Get pipeline status
       uri:
