@@ -135,8 +135,8 @@ provisioner:
     create: ../resources/provisioning/AWS/create.yml
     prepare: ../resources/provisioning/AWS/prepare.yml
     destroy: ../resources/provisioning/AWS/destroy.yml
-    verify: ../resources/tests/verify.yml
-    cleanup: ../resources/tests/cleanup.yml
+    verify: verify.yml
+    cleanup: cleanup.yml
   lint:
     name: ansible-lint
 scenario:
