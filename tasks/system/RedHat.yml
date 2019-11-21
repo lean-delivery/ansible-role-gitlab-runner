@@ -27,14 +27,14 @@
         metadata_expire: '300'
         description: GitLab Runner Stable
 
-    - name: Install GitLab runner {{ gitlab_runner_install_package }}
-      yum:
-        name: '{{ gitlab_runner_install_package }}'
-        state: present
-        update_cache: true
-      register: installed_gitlab
-      until: installed_gitlab is succeeded
-      notify: kick gitlab-runner
+    # - name: Install GitLab runner {{ gitlab_runner_install_package }}
+    #   yum:
+    #     name: '{{ gitlab_runner_install_package }}'
+    #     state: present
+    #     update_cache: true
+    #   register: installed_gitlab
+    #   until: installed_gitlab is succeeded
+    #   notify: kick gitlab-runner
 
   become: true
   tags:

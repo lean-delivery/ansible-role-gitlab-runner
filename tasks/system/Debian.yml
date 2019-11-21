@@ -18,14 +18,14 @@
         repo: '{{ gitlab_runner_repo }}'
         validate_certs: true
 
-    - name: Install GitLab agent {{ gitlab_runner_install_package }}
-      apt:
-        name: '{{ gitlab_runner_install_package }}'
-        state: present
-        update_cache: true
-      register: installed_gitlab
-      until: installed_gitlab is succeeded
-      notify: kick gitlab-runner
+    # - name: Install GitLab agent {{ gitlab_runner_install_package }}
+    #   apt:
+    #     name: '{{ gitlab_runner_install_package }}'
+    #     state: present
+    #     update_cache: true
+    #   register: installed_gitlab
+    #   until: installed_gitlab is succeeded
+    #   notify: kick gitlab-runner
   become: true
   tags:
     - always

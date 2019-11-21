@@ -6,11 +6,6 @@
   tags:
     - always
 
-- name: Prepare system
-  include_tasks: prepare-gitlab-runner.yml
-  tags:
-    - setup
-
 - name: Configure system
   include_tasks: '{{ platform }}'
   with_first_found:
@@ -20,6 +15,21 @@
     loop_var: platform
   tags:
     - setup
+
+- name: Prepare system
+  include_tasks: prepare-gitlab-runner.yml
+  tags:
+    - setup
+
+- name: Install GitLab agent {{ gitlab_runner_install_package }}
+  package:
+    name: '{{ gitlab_runner_install_package }}'
+    state: present
+    update_cache: true
+  register: installed_gitlab
+  until: installed_gitlab is succeeded
+  become: true
+  notify: kick gitlab-runner
 
 - name: Configure gitlab-runner daemon
   include_tasks: config-gitlab-runner.yml
