@@ -15,7 +15,9 @@
     state: present
   become: true
   register: gitlab_runner
-  until: gitlab_runner.runner.active is defined
+  until:
+    - gitlab_runner.runner.active is defined
+    - gitlab_runner.runner.active | bool
   when:
     - not gitlab_runner_skip_registration|bool
     - gitlab_ci_token | length
