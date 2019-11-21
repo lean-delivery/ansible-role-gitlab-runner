@@ -20,31 +20,52 @@
                 or
                 "'running' in ansible_facts.services['gitlab-runner'].state"
 
-    - name: Run pipeline gitlab-runner
+    - name: Commit to repo
       uri:
-        url: '{{ gitlab_url }}/api/v4/projects/{{ gitlab_project_id }}/pipelines/97554831/retry'
+        url: '{{ gitlab_url }}/api/v4/projects/{{ gitlab_project_id }}/repository/commits'
         method: POST
         headers:
           PRIVATE-TOKEN: '{{ gitlab_api_token }}'
         body_format: json
         status_code: 201
-      register: pipeline_triggered
+        body:
+          branch: master
+          commit_message: >-
+            Test {{ lookup('env', 'CI_JOB_ID') }}
+          actions:
+            - action: update
+              file_path: README.md
+              content: >-
+                {{ lookup('env', 'CI_COMMIT_SHORT_SHA') }}
+      register: git_commit
 
-    - name: Check var
+    - name: Check git_commit
       debug:
-        var: pipeline_triggered
+        var: git_commit
 
-    - name: Get status of pipeline
+    - name: Get commit info
       uri:
-        url: '{{ gitlab_url }}/api/v4/projects/{{ gitlab_project_id }}/pipelines/{{ pipeline_triggered.json.id }}'
+        url: '{{ gitlab_url }}/api/v4/projects/{{ gitlab_project_id }}/repository/commits/master'
+        method: GET
         headers:
           PRIVATE-TOKEN: '{{ gitlab_api_token }}'
+      register: git_commit_stat
+
+    # - name: Check git_commit_stat
+    #   debug:
+    #     var: git_commit_stat
+
+    - name: Get pipeline status
+      uri:
+        url: '{{ gitlab_url }}/api/v4/projects/{{ gitlab_project_id }}/pipelines/{{ git_commit_stat.json.last_pipeline.id }}'
         method: GET
-      register: status_of_pipeline
-      until: '"success" in status_of_pipeline.json.status'
+        headers:
+          PRIVATE-TOKEN: '{{ gitlab_api_token }}'
+      register: last_pipeline
+      until: '"success" in last_pipeline.json.status'
       retries: 5
       delay: 5
 
-    - name: Check status_of_pipeline
+    - name: Check var
       debug:
-        var: status_of_pipeline
+        var: last_pipeline
