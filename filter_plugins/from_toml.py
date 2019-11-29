@@ -11,7 +11,6 @@ author:
 
 import datetime
 import sys
-import click
 from collections import OrderedDict
 #pip3 install python-toml
 
