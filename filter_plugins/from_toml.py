@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/python
 
 DOCUMENTATION = '''
 ---
@@ -101,7 +101,6 @@ def _loads(s):
             _it[0] = _clear_empty(_is_empty(_it))
 
             """
-                处理类似
                 arr_arr = [
                     'zbc',
                     'sdf',
