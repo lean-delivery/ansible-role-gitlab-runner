@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/python
 
 DOCUMENTATION = '''
 ---
@@ -11,7 +11,6 @@ author:
 
 import datetime
 import sys
-import click
 from collections import OrderedDict
 #pip3 install python-toml
 
@@ -102,7 +101,6 @@ def _loads(s):
             _it[0] = _clear_empty(_is_empty(_it))
 
             """
-                处理类似
                 arr_arr = [
                     'zbc',
                     'sdf',
