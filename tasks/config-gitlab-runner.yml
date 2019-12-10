@@ -11,7 +11,9 @@
     registration_token: '{{ gitlab_ci_token }}'
     description: '{{ gitlab_runner_description }}'
     tag_list: '{{ gitlab_runner_tags }}'
+    access_level: '{{ gitlab_runner_access_level }}'
     run_untagged: '{{ gitlab_runner_untagged_builds_run }}'
+    locked: '{{ gitlab_runner_lock_to_project }}'
     state: present
   become: true
   register: gitlab_runner
