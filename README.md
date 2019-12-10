@@ -3,7 +3,7 @@ gitlab-runner role
 
 [![License](https://img.shields.io/badge/license-Apache-green.svg?style=flat)](https://raw.githubusercontent.com/lean-delivery/ansible-role-gitlab-runner/master/LICENSE)
 [![Build Status](https://travis-ci.org/lean-delivery/ansible-role-gitlab-runner.svg?branch=master)](https://travis-ci.org/lean-delivery/ansible-role-gitlab-runner)
-[![Build Status](https://gitlab.com/lean-delivery/ansible-role-gitlab-runner/badges/master/build.svg)](https://gitlab.com/lean-delivery/ansible-role-gitlab-runner/pipelines)
+[![Build Status](https://gitlab.com/lean-delivery/ansible-role-gitlab-runner/badges/master/pipeline.svg)](https://gitlab.com/lean-delivery/ansible-role-gitlab-runner/pipelines)
 [![Galaxy](https://img.shields.io/badge/galaxy-lean__delivery.gitlab__runner-blue.svg)](https://galaxy.ansible.com/lean_delivery/gitlab_runner)
 ![Ansible](https://img.shields.io/ansible/role/d/29089.svg)
 ![Ansible](https://img.shields.io/badge/dynamic/json.svg?label=min_ansible_version&url=https%3A%2F%2Fgalaxy.ansible.com%2Fapi%2Fv1%2Froles%2F29089%2F&query=$.min_ansible_version)
@@ -56,6 +56,8 @@ Requirements
   Gitlab url address. Default value: `https://{{ gitlab_host }}/`
   - `gitlab_runner_tags`  
   The tags associated with the Runner. Should be comma delimited. Default value is `delegated`
+  - `gitlab_runner_access_level: not_protected`  
+  Determines if a runner can pick up jobs from protected branches. Available values: `ref_protected` `not_protected` Default value is `not_protected`
   - `gitlab_runner_untagged_builds_run`  
   Config that prevents it from picking untagged jobs. Default value is `false`
   - `gitlab_runner_lock_to_project`  

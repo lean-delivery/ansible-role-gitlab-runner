@@ -18,6 +18,7 @@ gitlab_runner_description: >-
     {{ ansible_distribution_major_version }}
 gitlab_runner_tags: ['delegated']
 gitlab_runner_python_module_version: '1.12.1'
+gitlab_runner_access_level: not_protected
 gitlab_runner_untagged_builds_run: true
 gitlab_runner_lock_to_project: false
 gitlab_runner_executor: shell
