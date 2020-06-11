@@ -144,7 +144,7 @@ With [playlabs](https://yourlabs.io/oss/playlabs) you can install this role with
 
 Or, without playlabs, install with galaxy so that you can use with your playbook:
 
-ansible-galaxy install lean_delivery.gitlab-runner
+ansible-galaxy install lean_delivery.gitlab_runner
 
 Example Playbook
 ----------------
