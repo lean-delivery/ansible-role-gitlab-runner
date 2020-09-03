@@ -26,86 +26,86 @@ platforms:
       - rhel_family
       - pip2
 
-  - name: test-aws-centos8-gitlab-runner
-    image: ami-0ed2ad9dc845b42b6
-    platform: centos8
-    instance_type: t3.small
-    region: us-east-1
-    vpc_subnet_id: subnet-00e0c8e19face9102
-    assign_public_ip: false
-    spot_price: 0.04
-    security_group_name:
-      - default
-    wait_timeout: 1800
-    ssh_user: centos
-    groups:
-      - rhel_family
-      - pip3
+  # - name: test-aws-centos8-gitlab-runner
+  #   image: ami-0ed2ad9dc845b42b6
+  #   platform: centos8
+  #   instance_type: t3.small
+  #   region: us-east-1
+  #   vpc_subnet_id: subnet-00e0c8e19face9102
+  #   assign_public_ip: false
+  #   spot_price: 0.04
+  #   security_group_name:
+  #     - default
+  #   wait_timeout: 1800
+  #   ssh_user: centos
+  #   groups:
+  #     - rhel_family
+  #     - pip3
 
-  - name: test-aws-ubuntu16-gitlab-runner
-    image: ami-09677e0a6b14905b0
-    platform: ubuntu16
-    instance_type: t3.small
-    region: us-east-1
-    vpc_subnet_id: subnet-00e0c8e19face9102
-    assign_public_ip: false
-    security_group_name:
-      - default
-    spot_price: 0.04
-    wait_timeout: 1800
-    ssh_user: ubuntu
-    groups:
-      - debian_family
-      - pip3
+  # - name: test-aws-ubuntu16-gitlab-runner
+  #   image: ami-09677e0a6b14905b0
+  #   platform: ubuntu16
+  #   instance_type: t3.small
+  #   region: us-east-1
+  #   vpc_subnet_id: subnet-00e0c8e19face9102
+  #   assign_public_ip: false
+  #   security_group_name:
+  #     - default
+  #   spot_price: 0.04
+  #   wait_timeout: 1800
+  #   ssh_user: ubuntu
+  #   groups:
+  #     - debian_family
+  #     - pip3
 
-  - name: test-aws-ubuntu18-gitlab-runner
-    image: ami-012fd5eb46f56731f
-    platform: ubuntu18
-    instance_type: t3.small
-    region: us-east-1
-    vpc_subnet_id: subnet-00e0c8e19face9102
-    assign_public_ip: false
-    security_group_name:
-      - default
-    spot_price: 0.04
-    wait_timeout: 1800
-    ssh_user: ubuntu
-    groups:
-      - debian_family
-      - pip3
+  # - name: test-aws-ubuntu18-gitlab-runner
+  #   image: ami-012fd5eb46f56731f
+  #   platform: ubuntu18
+  #   instance_type: t3.small
+  #   region: us-east-1
+  #   vpc_subnet_id: subnet-00e0c8e19face9102
+  #   assign_public_ip: false
+  #   security_group_name:
+  #     - default
+  #   spot_price: 0.04
+  #   wait_timeout: 1800
+  #   ssh_user: ubuntu
+  #   groups:
+  #     - debian_family
+  #     - pip3
 
-  - name: test-aws-Debian9-gitlab-runner
-    image: ami-003f19e0e687de1cd
-    platform: debian9
-    instance_type: t3.small
-    region: us-east-1
-    vpc_subnet_id: subnet-00e0c8e19face9102
-    assign_public_ip: false
-    spot_price: 0.04
-    security_group_name:
-      - default
-    wait_timeout: 1800
-    ssh_user: admin
-    groups:
-      - debian_family
-      - pip3
+  # - name: test-aws-Debian9-gitlab-runner
+  #   image: ami-003f19e0e687de1cd
+  #   platform: debian9
+  #   instance_type: t3.small
+  #   region: us-east-1
+  #   vpc_subnet_id: subnet-00e0c8e19face9102
+  #   assign_public_ip: false
+  #   spot_price: 0.04
+  #   security_group_name:
+  #     - default
+  #   wait_timeout: 1800
+  #   ssh_user: admin
+  #   groups:
+  #     - debian_family
+  #     - pip3
 
-  - name: test-aws-Amazon2-gitlab-runner
-    image: ami-0b898040803850657
-    platform: amazon2
-    instance_type: t3.small
-    region: us-east-1
-    vpc_subnet_id: subnet-00e0c8e19face9102
-    assign_public_ip: false
-    spot_price: 0.04
-    security_group_name:
-      - default
-    wait_timeout: 1800
-    ssh_user: ec2-user
-    groups:
-      - rhel_family
-      - pip2
-      - amazon
+  # - name: test-aws-Amazon2-gitlab-runner
+  #   image: ami-0b898040803850657
+  #   platform: amazon2
+  #   instance_type: t3.small
+  #   region: us-east-1
+  #   vpc_subnet_id: subnet-00e0c8e19face9102
+  #   assign_public_ip: false
+  #   spot_price: 0.04
+  #   security_group_name:
+  #     - default
+  #   wait_timeout: 1800
+  #   ssh_user: ec2-user
+  #   groups:
+  #     - rhel_family
+  #     - pip2
+  #     - amazon
 
 provisioner:
   name: ansible
@@ -131,10 +131,10 @@ provisioner:
           - python3-libsemanage
         pip_executable: pip3
         python_executable: python3
-        ansible_python_interpreter: /usr/bin/python3
+        # ansible_python_interpreter: /usr/bin/python3
   playbooks:
     create: ../resources/provisioning/AWS/create.yml
-    prepare: ../resources/provisioning/AWS/prepare.yml
+    # prepare: ../resources/provisioning/AWS/prepare.yml
     destroy: ../resources/provisioning/AWS/destroy.yml
     verify: verify.yml
     cleanup: cleanup.yml
