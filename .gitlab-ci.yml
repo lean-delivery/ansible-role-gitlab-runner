@@ -1,5 +1,9 @@
 ---
 # Run all tests
+default:
+  image:
+    name: leandelivery/docker-ansible-ci:ansible-2.9
+
 stages:
   - lint
   - deployment test
@@ -27,7 +31,7 @@ Lint:
   tags:
     - lint
 
-Docker gitlab-runner:
+.Docker gitlab-runner:
   stage: deployment test
   script:
     - molecule test -s default
