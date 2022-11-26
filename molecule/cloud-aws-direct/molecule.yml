@@ -5,10 +5,9 @@ dependency:
     role-file: requirements.yml
 driver:
   name: ec2
-lint:
-  name: yamllint
-  options:
-    config-file: .yamllint
+lint: |
+  yamllint . -c .yamllint
+  ansible-lint . -c .ansible-lint
 platforms:
   - name: test-aws-centos7-gitlab-runner
     image: ami-9887c6e7
@@ -144,5 +143,3 @@ scenario:
   name: cloud-aws-direct
 verifier:
   name: ansible
-  lint:
-    name: ansible-lint

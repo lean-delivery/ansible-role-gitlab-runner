@@ -5,10 +5,9 @@ dependency:
     role-file: requirements.yml
 driver:
   name: docker
-lint:
-  name: yamllint
-  options:
-    config-file: .yamllint
+lint: |
+  yamllint . -c .yamllint
+  ansible-lint . -c .ansible-lint
 platforms:
   - name: test-docker-centos7-gitlab-runner
     image: leandelivery/docker-systemd:centos7
@@ -56,5 +55,3 @@ scenario:
   name: default
 verifier:
   name: ansible
-  lint:
-    name: ansible-lint
